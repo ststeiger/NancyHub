@@ -250,7 +250,7 @@ namespace Fos.Logging
                 // We could do with a global lock here, but that just sounds so bad.
                 // Instead, we try to avoid a global lock as much as possible, and count on another method
                 // to give us a finer grained lock.
-                LinkedList<RequestTimes> timesForEndpoint = null;
+                LinkedList<RequestTimes> timesForEndpoint = null; // Incompatibility
                 lock (CreateAndReturnRelativePathLock(req.RelativePath, out timesForEndpoint))
                 {
                     var verbTimes = timesForEndpoint.FirstOrDefault(t => t.HttpMethod == req.HttpMethod);
