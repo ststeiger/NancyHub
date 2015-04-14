@@ -4,8 +4,107 @@ namespace NancyHub
     using Nancy;
 
 
+
+	// https://github.com/centic9/jgit-cookbook
+	public abstract class GitImplementations
+	{
+		public virtual bool CreateRepo()
+		{
+
+			return false;
+		}
+
+		public virtual bool InitRepo()
+		{
+
+			return false;
+		}
+	}
+
+	public class CurrentGitImplementation : GitImplementations 
+	{
+
+	}
+
+
+
+	public abstract class GitAdmin
+	{
+
+		public virtual bool CreateRepo()
+		{
+			return true;
+		}
+
+		public virtual bool DeleteRepo()
+		{
+			return true;
+		}
+
+
+		public virtual bool DownloadRepo()
+		{
+			return true;
+		}
+
+		public virtual void GetRepo()
+		{
+
+		}
+
+		public virtual void ListRepos()
+		{
+
+
+		}
+
+
+		public virtual void SearchRepo()
+		{
+
+		}
+
+		public virtual void SearchRepos()
+		{
+
+
+		}
+
+	}
+
+
+
+	public class AdminV1 : GitAdmin
+	{
+
+	}
+
+
+	public class Repo
+	{
+		public string Name;
+		public string Description;
+		public string LastModified;
+	}
+
+
     public class IndexModule : NancyModule
     {
+		// Create repo
+		// Delete repo
+		// Description / Create Edit View
+
+
+		// List repos
+		// List file
+		// View file
+		// Search 
+
+		// Download zip
+
+		// Nice to have:
+		// Last updated
+		// Gist
 
 
         public IndexModule()
