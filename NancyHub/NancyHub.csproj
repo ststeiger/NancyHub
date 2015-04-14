@@ -39,6 +39,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\ngit\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\ngit\Mono.Posix.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\ngit\Mono.Security.dll</HintPath>
+    </Reference>
     <Reference Include="Nancy, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\Nancy.dll</HintPath>
@@ -54,6 +66,22 @@
     <Reference Include="Nancy.ViewEngines.Razor.BuildProviders, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Libs\Nancy.ViewEngines.Razor.BuildProviders.dll</HintPath>
+    </Reference>
+    <Reference Include="NGit, Version=2015.4.14.936, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\ngit\NGit.dll</HintPath>
+    </Reference>
+    <Reference Include="NSch, Version=2015.4.14.936, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\ngit\NSch.dll</HintPath>
+    </Reference>
+    <Reference Include="Sharpen, Version=2015.4.14.940, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\ngit\Sharpen.dll</HintPath>
+    </Reference>
+    <Reference Include="Sharpen.Unix, Version=2015.4.14.933, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\ngit\Sharpen.Unix.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -78,6 +106,13 @@
     <Content Include="Libs\Nancy.Hosting.Aspnet.dll" />
     <Content Include="Libs\Nancy.ViewEngines.Razor.BuildProviders.dll" />
     <Content Include="Libs\Nancy.ViewEngines.Razor.dll" />
+    <Content Include="Libs\ngit\ICSharpCode.SharpZipLib.dll" />
+    <Content Include="Libs\ngit\Mono.Posix.dll" />
+    <Content Include="Libs\ngit\Mono.Security.dll" />
+    <Content Include="Libs\ngit\NGit.dll" />
+    <Content Include="Libs\ngit\NSch.dll" />
+    <Content Include="Libs\ngit\Sharpen.dll" />
+    <Content Include="Libs\ngit\Sharpen.Unix.dll" />
     <Content Include="Libs\System.Web.Razor.Unofficial.dll" />
     <Content Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
