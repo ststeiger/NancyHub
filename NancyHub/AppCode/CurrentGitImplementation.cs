@@ -10,12 +10,12 @@ namespace NancyHub
     }
 
 
-	public class CurrentGitImplementation : GitImplementations
-	{
-		public CurrentGitImplementation()
-		{
-		}
-	}
+    public class CurrentGitImplementation : GitImplementations
+    {
+        public CurrentGitImplementation()
+        {
+        }
+    }
 
 
 }

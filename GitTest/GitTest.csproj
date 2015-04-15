@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -28,6 +28,10 @@
     <Externalconsole>true</Externalconsole>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\Ionic.Zip.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="ICSharpCode.SharpZipLib">
       <HintPath>Libs\ngit\ICSharpCode.SharpZipLib.dll</HintPath>
@@ -50,16 +54,18 @@
     <Reference Include="Sharpen.Unix">
       <HintPath>Libs\ngit\Sharpen.Unix.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="asiis.cs" />
+    <Compile Include="MyFastZip.cs" />
+    <Compile Include="Zipip.ExeBytes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ZipTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <Folder Include="Libs\" />
-    <Folder Include="Libs\ngit\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="Libs\ngit\ICSharpCode.SharpZipLib.dll" />
     <None Include="Libs\ngit\Mono.Posix.dll" />
@@ -74,5 +80,10 @@
       <Project>{AC48F78A-DA64-4547-AAB2-9CDD033502EA}</Project>
       <Name>NancyHub</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Libs\Ionic.BZip2.dll" />
+    <Content Include="Libs\Ionic.Zip.dll" />
+    <Content Include="Libs\Ionic.Zlib.dll" />
   </ItemGroup>
 </Project>
