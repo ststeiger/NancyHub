@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -33,21 +33,18 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Nancy, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\Nancy.dll</HintPath>
-    </Reference>
-    <Reference Include="Nancy.Owin, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\Nancy.Owin.dll</HintPath>
-    </Reference>
-    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\Owin.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Nancy">
+      <HintPath>Libs\Nancy.dll</HintPath>
+    </Reference>
+    <Reference Include="Nancy.Owin">
+      <HintPath>Libs\Nancy.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin">
+      <HintPath>Libs\Owin.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Program.cs" />
@@ -63,11 +60,11 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FastCgiNet\FastCgiNet.csproj">
-      <Project>{a0f27c46-bc4e-4611-af1f-a2b52a3746bd}</Project>
+      <Project>{A0F27C46-BC4E-4611-AF1F-A2B52A3746BD}</Project>
       <Name>FastCgiNet</Name>
     </ProjectReference>
     <ProjectReference Include="..\Fos\Fos.csproj">
-      <Project>{768202ee-b788-4265-b808-09deacc99839}</Project>
+      <Project>{768202EE-B788-4265-B808-09DEACC99839}</Project>
       <Name>Fos</Name>
     </ProjectReference>
   </ItemGroup>

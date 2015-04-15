@@ -3,8 +3,6 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>10.0.0</ProductVersion>
-    <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{A0F27C46-BC4E-4611-AF1F-A2B52A3746BD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>FastCgiNet</RootNamespace>
