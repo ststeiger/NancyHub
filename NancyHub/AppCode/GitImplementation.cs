@@ -10,23 +10,42 @@ namespace NancyHub
 
 
 		// ToInsensitiveGitString("connections.config")
-		public virtual string ToInsensitiveGitString(string input)
+		public virtual string ToInsensitiveGitIgnoreString(string input)
 		{
-			char[] gitStringArray = new char[input.Length * 4 ];
+            System.Text.StringBuilder sb = new System.Text.StringBuilder();
 
-			for (int i = 0; i < input.Length; ++i)
-			{
-				gitStringArray [i * 4 + 0] = '[';
-				gitStringArray [i * 4 + 1] = char.ToUpperInvariant(input[i]);
-				gitStringArray [i * 4 + 2] = char.ToLowerInvariant(input[i]);
-				gitStringArray [i * 4 + 3] = ']';
-			} // Next i
+            for (int i = 0; i < input.Length; ++i)
+            {
+                char c = input[i];
+                char cU = char.ToUpperInvariant(c);
+                char cL = char.ToLowerInvariant(c);
 
-			input = new string (gitStringArray);
-			gitStringArray = null;
+                if (cU != cL)
+                {
+                    sb.Append('[');
+                    sb.Append(cU);
+                    sb.Append(cL);
+                    sb.Append(']');
+                }
+                else
+                    sb.Append(c);
+            } // Next i
+
+            input = sb.ToString();
+            sb.Length = 0;
+            sb = null;
 
 			return input;
-		} // End Function ToInsensitiveGitString
+		} // End Function ToInsensitiveGitIgnoreString
+
+
+        public virtual GitRepositoryImplementation Open(string path)
+		{
+            CurrentRepositoryImplementation cri = new CurrentRepositoryImplementation();
+            cri.Repository = NGit.Api.Git.Open (path);
+			
+            return cri;
+		} // End Function Open
 
 
 		public virtual bool CloseRepository(NGit.Api.Git repository)
@@ -114,6 +133,15 @@ namespace NancyHub
 		} // End Function IsRepository 
 
 
+        // Creates directory if not exists
+        public virtual void Clone(string path, string url)
+        {
+            NGit.Api.CloneCommand clone = NGit.Api.Git.CloneRepository().SetDirectory(path).SetURI(url);
+            NGit.Api.Git repository = clone.Call();
+            CloseRepository(repository);
+        } // End Sub Clone 
+
+
 		public virtual string GetCurrentBranch(string path)
 		{
 			// Wrong result
@@ -149,11 +177,37 @@ namespace NancyHub
 		} // End Function GetCurrentBranch
 
 
-		public virtual void Init(string path)
+        public virtual void Init(string path)
+        {
+            Init(path, null);
+        } // End Sub Init
+
+
+        public virtual void Init(string path, bool bare)
+        {
+            Init(path, null, bare);
+        } // End Sub Init
+
+
+        public virtual void Init(string path, string url)
+        {
+            Init(path, url, false);
+        } // End Sub Init
+
+
+		public virtual void Init(string path, string url, bool bare)
 		{
 			// https://github.com/centic9/jgit-cookbook/blob/master/src/main/java/org/dstadler/jgit/porcelain/InitRepository.java
 			// Sharpen.FilePath pth = new Sharpen.FilePath ("path");
-			NGit.Api.Git repo = NGit.Api.Git.Init().SetDirectory(path).Call();
+			NGit.Api.Git repository = NGit.Api.Git.Init()
+                .SetDirectory(path)
+                .SetBare(bare)
+                .Call();
+
+            if (string.IsNullOrWhiteSpace(url))
+                return;
+
+
 
 			// NGit.Storage.File.FileRepositoryBuilder frb = new NGit.Storage.File.FileRepositoryBuilder();
 
@@ -163,32 +217,49 @@ namespace NancyHub
 
 
 			// git remote origin
-			NGit.StoredConfig config = repo.GetRepository().GetConfig();
-			config.SetString ("remote", "origin", "url", @"http://user:password@github.com/user/repo1.git");
+            NGit.StoredConfig config = repository.GetRepository().GetConfig();
+            // url: @"http://user:password@github.com/user/repo1.git"
+            config.SetString("remote", "origin", "url", url);
+
+            config.SetBoolean("core", null, "symlinks", false);
+            config.SetBoolean("core", null, "ignorecase", true);
+            
 			config.Save ();
 
-
-			// git ls-remote
-			System.Collections.Generic.ICollection<NGit.Ref> refs = repo.LsRemote ().SetRemote ("origin").Call ();
-
-			// NGit.Ref master = refs.FirstOrDefault(a => a.GetName() == "refs/heads/master");
-			NGit.Ref master = null;
-			foreach (NGit.Ref a in refs)
-			{
-				if (a.GetName () == "refs/heads/master")
-				{
-					master = a;
-					break;
-				} // End if (a.GetName() == "refs/heads/master")
-			} // Next a 
-
-
-			if (master != null)
-			{
-				string hash = master.GetObjectId ().Name;
-			} // End if (master != null)
-
+            CloseRepository(repository);
 		} // End Sub Init
+
+
+        public virtual string GetRemoteBranchId(string path)
+        {
+            NGit.Api.Git repository = NGit.Api.Git.Open(path);
+
+            // git ls-remote
+            System.Collections.Generic.ICollection<NGit.Ref> refs = repository.LsRemote().SetRemote("origin").Call();
+
+            // NGit.Ref master = refs.FirstOrDefault(a => a.GetName() == "refs/heads/master");
+            NGit.Ref master = null;
+            string hash = null;
+
+            foreach (NGit.Ref a in refs)
+            {
+                if (a.GetName() == "refs/heads/master")
+                {
+                    master = a;
+                    break;
+                } // End if (a.GetName() == "refs/heads/master")
+            } // Next a 
+
+
+            if (master != null)
+            {
+                hash = master.GetObjectId().Name;
+            } // End if (master != null)
+
+            CloseRepository(repository);
+
+            return hash;
+        } // End Function GetRemoteBranchId
 
 
 		public virtual void ListTags(string path)
@@ -246,12 +317,12 @@ namespace NancyHub
 			} // Next refa
 
 			CloseRepository(repository);
-		}
+		} // End Sub ListBranches
 
 
-		public virtual void ListCommits()
+        public virtual void ListCommits(string path)
 		{ 
-			NGit.Api.Git repository = NGit.Api.Git.Open (@"C:\Git\NGit");
+			NGit.Api.Git repository = NGit.Api.Git.Open (path);
 
 			Sharpen.Iterable<NGit.Revwalk.RevCommit> la = repository.Log ().All ().Call ();
 
@@ -263,48 +334,88 @@ namespace NancyHub
 			} // Next commit
 
 			CloseRepository(repository);
-		}
+		} // End Sub ListCommits
 
 
-		public virtual void Fetch()
-		{
-			NGit.Api.Git repository = NGit.Api.Git.Open (@"C:\Git\NGit");
+        public virtual void Fetch(string path)
+        {
+            NGit.Api.Git repository = NGit.Api.Git.Open(path);
 
-			// Fetch changes without merging them
-			NGit.Transport.FetchResult fetch = repository.Fetch ().Call ();
+            // Fetch changes without merging them
+            NGit.Transport.FetchResult fetch = repository.Fetch().Call();
 
-			// Pull changes (will automatically merge/commit them)
-			NGit.Api.PullResult pull = repository.Pull ().Call ();
-
-
-			// Get the current branch status
-			NGit.Api.Status status = repository.Status ().Call ();
-
-			// The IsClean() method is helpful to check if any changes
-			// have been detected in the working copy. I recommend using it,
-			// as NGit will happily make a commit with no actual file changes.
-			bool isClean = status.IsClean ();
+            CloseRepository(repository);
+        } // End Sub Fetch
 
 
-			// You can also access other collections related to the status
-			System.Collections.Generic.ICollection<string> added = status.GetAdded ();
-			System.Collections.Generic.ICollection<string> changed = status.GetChanged ();
-			System.Collections.Generic.ICollection<string> removed = status.GetRemoved ();
+        public virtual void Pull(string path)
+        {
+            NGit.Api.Git repository = NGit.Api.Git.Open(path);
+
+            // Pull changes (will automatically merge/commit them)
+            NGit.Api.PullResult pull = repository.Pull().Call();
+
+            CloseRepository(repository);
+        } // End Sub Pull
 
 
-			// Clean our working copy
-			System.Collections.Generic.ICollection<string> clean = repository.Clean ().Call ();
+        public virtual void Status(string path)
+        {
+            NGit.Api.Git repository = NGit.Api.Git.Open(path);
 
-			// Add all files to the stage (you could also be more specific)
-			NGit.Dircache.DirCache add = repository.Add ()
-					.AddFilepattern (".")
-					.Call ();
+            // Get the current branch status
+            NGit.Api.Status status = repository.Status().Call();
 
-			// Remove files from the stage
-			NGit.Dircache.DirCache remove = repository.Rm ()
-					.AddFilepattern (".gitignore")
-					.Call ();
-		} // End Sub Fetch
+            CloseRepository(repository);
+        } // End Sub Status
+
+
+        public virtual bool HasChanges(string path)
+        {
+            NGit.Api.Git repository = NGit.Api.Git.Open(path);
+
+            // Get the current branch status
+            NGit.Api.Status status = repository.Status().Call();
+
+
+            // The IsClean() method is helpful to check if any changes
+            // have been detected in the working copy. I recommend using it,
+            // as NGit will happily make a commit with no actual file changes.
+            bool isClean = status.IsClean();
+            CloseRepository(repository);
+
+            return isClean;
+        } // End Function HasChanges
+
+
+        public virtual void UnleashHeavok(string path)
+        {
+            NGit.Api.Git repository = NGit.Api.Git.Open(path);
+
+            // Get the current branch status
+            NGit.Api.Status status = repository.Status().Call();
+
+            // You can also access other collections related to the status
+            System.Collections.Generic.ICollection<string> added = status.GetAdded();
+            System.Collections.Generic.ICollection<string> changed = status.GetChanged();
+            System.Collections.Generic.ICollection<string> removed = status.GetRemoved();
+
+
+            // Clean our working copy
+            System.Collections.Generic.ICollection<string> clean = repository.Clean().Call();
+
+            // Add all files to the stage (you could also be more specific)
+            NGit.Dircache.DirCache add = repository.Add()
+                    .AddFilepattern(".")
+                    .Call();
+
+            // Remove files from the stage
+            NGit.Dircache.DirCache remove = repository.Rm()
+                    .AddFilepattern(".gitignore")
+                    .Call();
+
+            CloseRepository(repository);
+        } // End Sub UnleashHeavok
 
 
 		// http://stackoverflow.com/questions/8234373/committing-and-pushing-to-github-using-jgit-bare-repo
@@ -326,9 +437,9 @@ namespace NancyHub
 				add.AddFilepattern ("PlayState.as").Call ();
 			}
 			catch (System.Exception)
-			{
-			}
-		}
+			{ }
+
+		} // End Sub UnleashHeavokOnBareRepo
 
 
 		public virtual void CreateBranch(string path, string branchName)
@@ -346,36 +457,84 @@ namespace NancyHub
 			create.Call ();
 
 			CloseRepository(repository);
-		}
+		} // End Sub CreateBranch
 
 
+        public virtual string Commit(string path)
+        {
+            return Commit(path, "New Changes");
+        } // End Function Commit
 
 
-		public virtual void Commit()
+        public virtual string Commit(string path, string message)
+        {
+            string commitId = null;
+
+            // No empty commit
+            if (!HasChanges(path))
+                return commitId;
+
+            NGit.Api.Git repository = NGit.Api.Git.Open(path);
+
+            NGit.PersonIdent author = new NGit.PersonIdent("FooBar2000", "lol@foobar2000.com");
+            
+            // Commit our changes after adding files to the stage
+            NGit.Revwalk.RevCommit commit = repository.Commit()
+                    .SetMessage(message)
+                    .SetAuthor(author)
+                    .SetAll(true) // This automatically stages modified and deleted files
+                    .Call();
+
+            // Our new commit's hash
+            NGit.ObjectId hash = commit.Id;
+            commitId = hash.Name;
+
+            CloseRepository(repository);
+
+            return commitId;
+        } // End Function Commit
+
+
+        public virtual void CommitAndPush(string path)
+        {
+            // No empty commit
+            if (!HasChanges(path))
+                return;
+
+            NGit.Api.Git repository = NGit.Api.Git.Open(path);
+
+            NGit.PersonIdent author = new NGit.PersonIdent("Lance Mcnearney", "lance@mcnearney.net");
+            string message = "My commit message";
+
+            // Commit our changes after adding files to the stage
+            NGit.Revwalk.RevCommit commit = repository.Commit()
+                    .SetMessage(message)
+                    .SetAuthor(author)
+                    .SetAll(true) // This automatically stages modified and deleted files
+                    .Call();
+
+            // Our new commit's hash
+            NGit.ObjectId hash = commit.Id;
+
+            // Push our changes back to the origin
+            Sharpen.Iterable<NGit.Transport.PushResult> push = repository.Push().Call();
+            CloseRepository(repository);
+        } // End Sub CommitAndPush 
+
+
+        public virtual void Reset()
+        {
+            string dir = System.IO.Path.GetDirectoryName(
+                System.Reflection.Assembly.GetExecutingAssembly().Location
+            );
+
+            Reset(dir);
+        } // End Sub Reset 
+
+
+		public virtual void Reset(string path)
 		{
-			NGit.Api.Git repository = NGit.Api.Git.Open (@"C:\Git\NGit");
-
-			NGit.PersonIdent author = new NGit.PersonIdent ("Lance Mcnearney", "lance@mcnearney.net");
-			string message = "My commit message";
-
-			// Commit our changes after adding files to the stage
-			NGit.Revwalk.RevCommit commit = repository.Commit ()
-					.SetMessage (message)
-					.SetAuthor (author)
-					.SetAll (true) // This automatically stages modified and deleted files
-					.Call ();
-
-			// Our new commit's hash
-			NGit.ObjectId hash = commit.Id;
-
-			// Push our changes back to the origin
-			Sharpen.Iterable<NGit.Transport.PushResult> push = repository.Push ().Call ();
-		}
-
-
-		public virtual void Reset()
-		{
-			NGit.Api.Git repository = NGit.Api.Git.Open (@"C:\Git\NGit");
+			NGit.Api.Git repository = NGit.Api.Git.Open (path);
 
 			NGit.Ref reset = repository.Reset ()
 					.SetMode (NGit.Api.ResetCommand.ResetType.HARD)
@@ -383,30 +542,33 @@ namespace NancyHub
 					.Call ();
 
 			CloseRepository(repository);
-		}
+		} // End Sub Reset 
 
 
-		public virtual void Open()
+        public virtual void SetGlobalCredentials(string path, string userName, string password)
+        {
+            NGit.Transport.CredentialsProvider credentials =
+                    new NGit.Transport.UsernamePasswordCredentialsProvider(userName, password);
+
+            // Or globally as the default for each new command
+            NGit.Transport.CredentialsProvider.SetDefault(credentials);
+        } // End Sub SetGlobalCredentials 
+
+
+		public virtual void FetchWithCredentials(string path, string userName, string password)
 		{
-			NGit.Api.Git repo = NGit.Api.Git.Open (@"C:\Git\NGit");
-		}
+            NGit.Api.Git repository = NGit.Api.Git.Open(path);
 
-		public virtual void SetCredentials()
-		{
-			NGit.Api.Git repository = null;
-
-			NGit.Transport.CredentialsProvider credentials = new NGit.Transport.UsernamePasswordCredentialsProvider ("username", "password");
+			NGit.Transport.CredentialsProvider credentials =
+                new NGit.Transport.UsernamePasswordCredentialsProvider(userName, password);
 
 			// On a per-command basis
 			NGit.Transport.FetchResult fetch = repository.Fetch ()
 					.SetCredentialsProvider (credentials)
 					.Call ();
 
-			// Or globally as the default for each new command
-			NGit.Transport.CredentialsProvider.SetDefault (credentials);
-		}
-
-
+            CloseRepository(repository);
+		} // End Sub FetchWithCredentials
 
 
 		public class CustomConfigSessionFactory : NGit.Transport.JschConfigSessionFactory
@@ -442,10 +604,10 @@ namespace NancyHub
 
 				NSch.JSch jsch = this.GetJSch (hc, NGit.Util.FS.DETECTED);
 				jsch.AddIdentity ("KeyPair", System.Text.Encoding.UTF8.GetBytes (PrivateKey), System.Text.Encoding.UTF8.GetBytes (PublicKey), null);
-			}
+            } // End Sub Configure
 
-		}
-		// End Class CustomConfigSessionFactory
+
+		} // End Class CustomConfigSessionFactory
 
 
 		// http://stackoverflow.com/questions/13764435/ngit-making-a-connection-with-a-private-key-file/
@@ -462,33 +624,10 @@ namespace NancyHub
 					.SetURI ("properties.SourceUrlPath")
 					.SetBranchesToClone (new System.Collections.ObjectModel.Collection<string> () { "master" })
 					.Call ();
-		}
+        } // End Sub CloneWithPrivateKey
 
 
-
-		public virtual bool CreateRepo()
-		{
-
-			return false;
-		}
-
-		public virtual bool InitRepo()
-		{
-
-			return false;
-		}
+	} // End Class GitImplementations
 
 
-
-		public virtual void Clone(string dir, string url)
-		{
-			NGit.Api.CloneCommand clone = NGit.Api.Git.CloneRepository ().SetDirectory ("dir").SetURI (url);
-			NGit.Api.Git repo = clone.Call ();
-		}
-
-
-
-	}
-
-
-}
+} // End Namespace NancyHub

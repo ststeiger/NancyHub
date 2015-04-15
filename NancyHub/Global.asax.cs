@@ -60,7 +60,7 @@ namespace NancyHub
         }
 
 
-    }
+    } // End Class Global : System.Web.HttpApplication
 
 
-}
+} // End Namespace NancyHub

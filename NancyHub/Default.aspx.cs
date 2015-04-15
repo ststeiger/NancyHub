@@ -1,16 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Web;
-using System.Web.UI;
-using System.Web.UI.WebControls;
-
+﻿
 namespace NancyHub
 {
+
+
     public partial class _Default : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+
+
+        protected void Page_Load(object sender, System.EventArgs e)
         {
 
-        }
-    }
-}
+        } // End Sub Page_Load 
+
+
+    } // End Class _Default 
+
+
+} // End Namespace NancyHub
