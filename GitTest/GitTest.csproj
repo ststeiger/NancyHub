@@ -56,7 +56,24 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Lzma\Common\CommandLineParser.cs" />
+    <Compile Include="Lzma\Common\CRC.cs" />
+    <Compile Include="Lzma\Common\InBuffer.cs" />
+    <Compile Include="Lzma\Common\OutBuffer.cs" />
+    <Compile Include="Lzma\Compress\LZMA\LzmaBase.cs" />
+    <Compile Include="Lzma\Compress\LZMA\LzmaDecoder.cs" />
+    <Compile Include="Lzma\Compress\LZMA\LzmaEncoder.cs" />
+    <Compile Include="Lzma\Compress\LZ\IMatchFinder.cs" />
+    <Compile Include="Lzma\Compress\LZ\LzBinTree.cs" />
+    <Compile Include="Lzma\Compress\LZ\LzInWindow.cs" />
+    <Compile Include="Lzma\Compress\LZ\LzOutWindow.cs" />
+    <Compile Include="Lzma\Compress\RangeCoder\RangeCoder.cs" />
+    <Compile Include="Lzma\Compress\RangeCoder\RangeCoderBit.cs" />
+    <Compile Include="Lzma\Compress\RangeCoder\RangeCoderBitTree.cs" />
+    <Compile Include="Lzma\ICoder.cs" />
+    <Compile Include="Lzma\SevenZipHelper.cs" />
     <Compile Include="MyFastZip.cs" />
+    <Compile Include="Tar.cs" />
     <Compile Include="Zipip.ExeBytes.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

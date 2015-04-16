@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+</head>
+<body>
+    <span id="ipaddress"></span>
+
+
+    <script type="text/javascript">
+
+        window.onload = function ()
+        {
+            var script = document.createElement("script");
+            script.type = "text/javascript";
+            script.src = "http://jsonip.appspot.com/?callback=DisplayIP";
+            document.getElementsByTagName("head")[0].appendChild(script);
+        };
+
+
+
+        function DisplayIP(response)
+        {
+            document.getElementById("ipaddress").innerHTML = "Your IP Address is " + response.ip;
+        }
+
+
+        // Intranet:
+        // Page.Request.UserHostName
+        // http://stackoverflow.com/questions/552382/actionscript-3-how-to-get-host-name-from-url
+        // http://stackoverflow.com/questions/7657842/how-to-call-flash-actionscript-callback-method-from-javascript
+        // http://sourcecookbook.com/%C3%83%C2%A9/recipes/89/call-a-function-in-your-flash-movie-from-javascript
+        function GetComputerName()
+        {
+            try
+            {
+                var network = new ActiveXObject('WScript.Network');
+                // Show a pop up if it works
+                alert(network.computerName);
+            }
+            catch (e)
+            {
+                console.log(e);
+            }
+        }
+
+        GetComputerName();
+
+
+    </script>
+
+</body>
+</html>

@@ -75,7 +75,7 @@ namespace ZipUtils
         public static void CreateExe(string zipFilename, string outputName)
         {
             // Sanitize
-            if(string.IsNullOrEmpty(outputName))
+            if (string.IsNullOrEmpty(outputName))
                 outputName = System.IO.Path.ChangeExtension(zipFilename, ".exe");
 
             // Make sure it ends with the exe extention
@@ -103,7 +103,7 @@ namespace ZipUtils
                 {
                     //write the startercode for the exe
                     exe.Write(ZipExeBytes.exe, 0, ZipExeBytes.exe.Length);
-                    
+
                     //start reading the zipfile
                     ReadIn = Zip.Read(buffer, 0, chunksize);
 

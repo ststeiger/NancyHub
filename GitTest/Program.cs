@@ -18,16 +18,18 @@ namespace GitTest
 		}
 
 
-
         public static void Main(string[] args)
         {
+            // string FileToCompress = "";
+            // SevenZip.Compression.LZMA.SevenZipHelper.Compress(FileToCompress, FileToCompress + ".lzma");
+            // SevenZip.Compression.LZMA.SevenZipHelper.Decompress(@"D:\wkhtmltopdf\msvc\x32\bin\wkhtmltox.dll.lzma", @"D:\wkhtmltopdf\msvc\x32\bin\decomp.dll");
+            
+
             string repoURI = string.Format(@"D:\{0}\Documents\Visual Studio 2013\Projects\NancyHub", System.Environment.UserName);
             if (System.Environment.OSVersion.Platform == System.PlatformID.Unix)
                 repoURI = @"/root/sources/NancyHub";
 
             NancyHub.CurrentGitImplementation cgi = new NancyHub.CurrentGitImplementation();
-
-
 
 
             string confFile = cgi.ToInsensitiveGitIgnoreString("connections.config");
