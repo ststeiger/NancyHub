@@ -91,8 +91,9 @@ namespace COR_Helper
         public static string JavaScriptUrlEncode(ref string strText)
         {
             string strMessage = System.Web.HttpContext.Current.Server.HtmlEncode(strText);
-            //Grrr
-            strMessage = Microsoft.JScript.GlobalObject.escape(strMessage);
+            
+			//Grrr
+			strMessage = WebTest.JavaScript.EncodeString (strMessage);
             return System.Web.HttpContext.Current.Server.UrlEncode(strMessage);
         } // JavaScriptUrlEncode 
 
