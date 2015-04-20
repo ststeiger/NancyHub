@@ -41,7 +41,7 @@ namespace NancyHub
 
         public virtual GitRepositoryImplementation Open(string path)
         {
-            CurrentRepositoryImplementation cri = new CurrentRepositoryImplementation();
+            CurrentRepositoryImplementation cri = new CurrentRepositoryImplementation(path);
             cri.Repository = NGit.Api.Git.Open(path);
 
             return cri;
@@ -262,6 +262,55 @@ namespace NancyHub
         } // End Function GetRemoteBranchId
 
 
+		// http://stackoverflow.com/questions/3407575/retrieving-oldest-commit-with-jgit
+		public virtual void GetOldestCommit(string path)
+		{
+			NGit.Revwalk.RevCommit c = null;
+			NGit.Api.Git repository = NGit.Api.Git.Open(path);
+
+			try
+			{
+				NGit.Revwalk.RevWalk rw = new NGit.Revwalk.RevWalk(repository.GetRepository());
+
+				NGit.AnyObjectId headid = repository.GetRepository ().Resolve (NGit.Constants.HEAD);
+				NGit.Revwalk.RevCommit root = rw.ParseCommit (headid);
+
+				string msg1 = root.GetFullMessage();
+
+
+				rw.Sort (NGit.Revwalk.RevSort.REVERSE);
+
+				rw.MarkStart (root);
+				c = rw.Next (); 
+				// repository.GetRepository().
+			}
+			catch(System.Exception ex)
+			{ 
+				System.Console.WriteLine (ex.Message);
+			}
+
+			string msg2 = c.GetFullMessage();
+
+			// Get author
+			NGit.PersonIdent authorIdent = c.GetAuthorIdent ();
+			System.DateTime authorDate = authorIdent.GetWhen ();
+			System.TimeZoneInfo authorTimeZone = authorIdent.GetTimeZone();
+
+			NGit.PersonIdent committerIdent = c.GetCommitterIdent();
+			// http://stackoverflow.com/questions/12608610/how-do-you-get-the-author-date-and-commit-date-from-a-jgit-revcommit
+
+			System.Console.WriteLine (authorIdent);
+			System.Console.WriteLine (authorDate);
+			System.Console.WriteLine (authorTimeZone);
+			System.Console.WriteLine (committerIdent);
+
+
+
+
+			CloseRepository(repository);
+		}
+
+
         public virtual void ListTags(string path)
         {
             NGit.Api.Git repository = NGit.Api.Git.Open(path);
@@ -325,6 +374,8 @@ namespace NancyHub
             NGit.Api.Git repository = NGit.Api.Git.Open(path);
 
             Sharpen.Iterable<NGit.Revwalk.RevCommit> la = repository.Log().All().Call();
+
+
 
             int count = 0;
             foreach (NGit.Revwalk.RevCommit commit in la)

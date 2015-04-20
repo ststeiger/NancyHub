@@ -5,6 +5,10 @@ namespace NancyHub
 
     public class CurrentRepositoryImplementation : GitRepositoryImplementation
     {
+		public CurrentRepositoryImplementation(string path) : base(path)
+		{}
+
+
         public GitImplementations Git = new CurrentGitImplementation();
         public NGit.Api.Git Repository;
     }
@@ -12,9 +16,9 @@ namespace NancyHub
 
     public class CurrentGitImplementation : GitImplementations
     {
-        public CurrentGitImplementation()
-        {
-        }
+
+        // public CurrentGitImplementation()
+        // { }
     }
 
 

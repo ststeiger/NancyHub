@@ -14,12 +14,51 @@ namespace GitTest
 			// Added CreateExe to FastZip
 			// ICSharpCode.SharpZipLib.Zip.FastZip fz = new ICSharpCode.SharpZipLib.Zip.FastZip();
 			// fz.CreateZip("zipfilename", "sourceDir", true, null);
+		}
+
+
+		public static void Ena()
+		{
+			System.IO.Directory.EnumerateDirectories("path");
+			// System.IO.Directory.EnumerateFiles ();
+			// System.IO.Directory.EnumerateFileSystemEntries ("path");
+		}
+
+
+		public static void ListDirectories()
+		{
+			string path= @"/root/sources/";
+
+			/*
+			System.Collections.Generic.IEnumerable<string> dl = 
+				System.IO.Directory.EnumerateDirectories(path);
+				
+			foreach (string str in dl)
+			{
+				System.Console.WriteLine (str);
+			}
+			
+			*/
+
+			System.IO.DirectoryInfo dirinf = new System.IO.DirectoryInfo (path);
+
+			foreach (System.IO.DirectoryInfo di in dirinf.EnumerateDirectories())
+			{
+				System.Console.WriteLine (di.Name);
+			}
+
 
 		}
 
 
         public static void Main(string[] args)
         {
+			// ListDirectories();
+
+
+
+
+
             // string FileToCompress = "";
             // SevenZip.Compression.LZMA.SevenZipHelper.Compress(FileToCompress, FileToCompress + ".lzma");
             // SevenZip.Compression.LZMA.SevenZipHelper.Decompress(@"D:\wkhtmltopdf\msvc\x32\bin\wkhtmltox.dll.lzma", @"D:\wkhtmltopdf\msvc\x32\bin\decomp.dll");
@@ -30,6 +69,8 @@ namespace GitTest
                 repoURI = @"/root/sources/NancyHub";
 
             NancyHub.CurrentGitImplementation cgi = new NancyHub.CurrentGitImplementation();
+
+			cgi.GetOldestCommit (repoURI);
 
 
             string confFile = cgi.ToInsensitiveGitIgnoreString("connections.config");
