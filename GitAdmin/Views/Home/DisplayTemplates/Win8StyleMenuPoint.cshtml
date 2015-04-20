@@ -1,0 +1,12 @@
+﻿@model GitAdmin.Models.Win8StyleMenuPoint
+
+@{
+    Layout = null;
+}
+
+
+        <a id="a@(Model.strId)" href="@Model.strURL">
+            <div id="div@(Model.strId)" class="@Model.strDivBaseClass @Model.strDivClass">
+                <span id="sp@(Model.strId)" class="@Model.strSpanClass" >@Model.strSpanText</span>
+            </div>
+        </a>

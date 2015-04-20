@@ -1,0 +1,119 @@
+﻿@model GitAdmin.Controllers.HomeController.OverviewModel
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Overview</title>
+
+
+    <style type="text/css" media="all">
+
+
+        .Box
+        {
+            display: block;
+
+            width: 200px;
+            height: 80px;
+
+            /* win8 : Quadratisch: 120px
+            Rechteck:
+            width: 250px;
+            height: 120px;
+            */
+            background: #666666 none no-repeat 10% 80%;
+
+            color: #ffffff;
+            font: normal 13px Arial;
+
+            position: relative;
+            margin-bottom: 2px;
+
+            cursor: pointer;
+        }
+
+
+        #coRight
+        {
+            width: 606px;
+        }
+
+
+        #coRight .Box
+        {
+            float: left;
+            margin-right: 2px;
+        }
+
+
+        .Box .Text
+        {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+
+            text-align: right;
+        }
+
+
+        .B3 {
+        background-color: #444444;
+        background-image: url(@Url.Content("~/Content/images/w8/1.png"));
+        }
+
+
+        .B4 {
+        background-color: #2879EE;
+        background-image: url(@Url.Content("~/Content/images/w8/2.png"));
+        }
+
+
+        .B5 {
+        background-color: #2879EE;
+        background-image: url(@Url.Content("~/Content/images/w8/4.png"));
+        }
+
+
+        .B6 {
+        background-color: #00AEEF;
+        background-image: url(@Url.Content("~/Content/images/w8/3.png"));
+        }
+
+
+        .B7 {
+        background-color: #008E00;
+        background-image: url(@Url.Content("~/Content/images/w8/10.png"));
+        }
+
+
+        .B8 {
+        background-color: #008E00;
+        background-image: url(@Url.Content("~/Content/images/w8/7.png"));
+        }
+
+
+        .Box:hover {
+        background-color: #FF8E00;
+        /*background-image: url(@Url.Content("~/Content/images/w8/7.png"));*/
+        }
+
+    </style>
+
+
+</head>
+<body>
+
+    <div id="coRight" class="ui-sortable">
+
+        @Html.DisplayFor(m => m.lsMenuPoints)
+
+    </div>
+</body>
+</html>

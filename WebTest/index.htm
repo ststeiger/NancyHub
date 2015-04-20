@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -13,14 +13,25 @@
     <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
     <meta http-equiv="pragma" content="no-cache" />
 
+    <link rel="search" type="application/opensearchdescription+xml" href="/opensearch.xml" title="GitHub">
+
+
+
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
+    <!--
+    <link rel="shortcut icon" href="/favicon.ico" />
+        -->
+
+    <link rel="stylesheet" type="text/css" href="foo.css?v=1" />
+
     <style type="text/css" media="all">
         
-
 
         *
         {
             box-sizing: border-box;
         }
+
 
         html
         {
@@ -29,6 +40,7 @@
             -webkit-text-size-adjust: 100%;
         }
 
+
         /*
         body
         {
@@ -36,7 +48,7 @@
             color: #333;
             background-color: #fff;
         }
-            */
+        */
 
 
         p
@@ -48,6 +60,7 @@
             -webkit-margin-end: 0px;
         }
 
+
         .repo-list-item
         {
             position: relative;
@@ -58,13 +71,15 @@
         }
 
 
-        .repo-list-stats {
+        .repo-list-stats 
+        {
 		  margin-top: 6px;
 		  float: right;
 		  font-size: 12px;
 		  font-weight: bold;
 		  color: #888;
 		}
+
 
         .repo-list-info
         {
@@ -77,6 +92,7 @@
             vertical-align: middle;
         }
 
+
         .repo-list-description
         {
             max-width: 550px;
@@ -86,6 +102,7 @@
             color: #666;
         }
 
+
         .repo-list-meta
         {
             display: block;
@@ -94,6 +111,7 @@
             font-size: 13px;
             color: #888;
         }
+
 
         ul, menu, dir
         {
@@ -113,12 +131,14 @@
             text-decoration: none;
         }
 
+
         h1, h2, h3, h4, h5, h6
         {
             margin-top: 15px;
             margin-bottom: 15px;
             line-height: 1.1;
         }
+
 
         h3
         {
@@ -136,144 +156,163 @@
 
     <style type="text/css" media="all">
 
-	    .filter-bar {
-		  padding: 10px;
-		  background-color: #fafafa;
-		  border-bottom: 1px solid #e5e5e5;
-		}
-
-		.filter-bar li {
-		  position: relative;
-		  float: right;
-		  list-style: none;
-		  margin-left: 10px;
-		  font-size: 14px;
+	    .filter-bar 
+        {
+            padding: 10px;
+            background-color: #fafafa;
+            border-bottom: 1px solid #e5e5e5;
 		}
 
 
-		repo_filterer {
-		  float: right;
-		  margin-top: 8px;
+		.filter-bar li 
+        {
+            position: relative;
+            float: right;
+            list-style: none;
+            margin-left: 10px;
+            font-size: 14px;
 		}
 
 
-  	.btn {
-	  position: relative;
-	  display: inline-block;
-	  padding: 6px 12px;
-	  font-size: 13px;
-	  font-weight: bold;
-	  line-height: 20px;
-	  color: #333;
-	  white-space: nowrap;
-	  vertical-align: middle;
-	  cursor: pointer;
-	  background-color: #eee;
-	  background-image: -webkit-linear-gradient(#fcfcfc, #eee);
-	  background-image: linear-gradient(#fcfcfc, #eee);
-	  border: 1px solid #d5d5d5;
-	  border-radius: 3px;
-	  -webkit-user-select: none;
-	  -moz-user-select: none;
-	  -ms-user-select: none;
-	  user-select: none;
-	  -webkit-appearance: none;
-}
-
-	  input, select, textarea, button {
-  font: 13px/1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
-}
-
-  input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="tel"], input[type="url"], textarea {
-  min-height: 34px;
-  padding: 7px 8px;
-  font-size: 13px;
-  color: #333;
-  vertical-align: middle;
-  background-color: #fff;
-  background-repeat: no-repeat;
-  background-position: right center;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  outline: none;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
-}
+		repo_filterer 
+        {
+            float: right;
+            margin-top: 8px;
+		}
 
 
-  input:not([type]), input[type="email" i], input[type="number" i], input[type="password" i], input[type="tel" i], input[type="url" i], input[type="text" i] {
-  padding: 1px 0px;
-}
+        .btn 
+        {
+	          position: relative;
+	          display: inline-block;
+	          padding: 6px 12px;
+	          font-size: 13px;
+	          font-weight: bold;
+	          line-height: 20px;
+	          color: #333;
+	          white-space: nowrap;
+	          vertical-align: middle;
+	          cursor: pointer;
+	          background-color: #eee;
+	          background-image: -webkit-linear-gradient(#fcfcfc, #eee);
+	          background-image: linear-gradient(#fcfcfc, #eee);
+	          border: 1px solid #d5d5d5;
+	          border-radius: 3px;
+	          -webkit-user-select: none;
+	          -moz-user-select: none;
+	          -ms-user-select: none;
+	          user-select: none;
+	          -webkit-appearance: none;
+        }
+
+
+        input, select, textarea, button 
+        {
+            font: 13px/1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+
+
+        input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="tel"], input[type="url"], textarea 
+        {
+            min-height: 34px;
+            padding: 7px 8px;
+            font-size: 13px;
+            color: #333;
+            vertical-align: middle;
+            background-color: #fff;
+            background-repeat: no-repeat;
+            background-position: right center;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            outline: none;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+        }
+
+
+        input:not([type]), input[type="email" i], input[type="number" i], input[type="password" i], input[type="tel" i], input[type="url" i], input[type="text" i] 
+        {
+            padding: 1px 0px;
+        }
 
 
 
-  input[type="text"].focus, input[type="text"]:focus, .focused .drag-and-drop, input[type="password"].focus, input[type="password"]:focus, input[type="email"].focus, input[type="email"]:focus, input[type="number"].focus, input[type="number"]:focus, input[type="tel"].focus, input[type="tel"]:focus, input[type="url"].focus, input[type="url"]:focus, textarea.focus, textarea:focus {
-  border-color: #51a7e8;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.075),0 0 5px rgba(81,167,232,0.5);
-}
+        input[type="text"].focus, input[type="text"]:focus, .focused .drag-and-drop, input[type="password"].focus, input[type="password"]:focus, input[type="email"].focus, input[type="email"]:focus, input[type="number"].focus, input[type="number"]:focus, input[type="tel"].focus, input[type="tel"]:focus, input[type="url"].focus, input[type="url"]:focus, textarea.focus, textarea:focus 
+        {
+            border-color: #51a7e8;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.075),0 0 5px rgba(81,167,232,0.5);
+        }
 
-  .repo-list-stats .repo-list-stat-item>.octicon {
-  font-size: 14px;
-}
+        .repo-list-stats .repo-list-stat-item>.octicon 
+        {
+            font-size: 14px;
+        }
 
-  .repo-list-stats .repo-list-stat-item:hover {
-  color: #4183c4;
-}
-
-
-  @font-face {
-    font-family: 'octicons';
-    src: url(https://assets-cdn.github.com/assets/octicons/octicons/octicons-d5329fb2f700a56fe0b9ae5c301fabbdf5d77c1293b1fa1d35de9357530e2326.eot?#iefix) format("embedded-opentype")
-    , url(https://assets-cdn.github.com/assets/octicons/octicons/octicons-70c2cafa59738740d1ad6d66d46342bafdc6ca63ade3e44c24bed1e6f7b1db71.woff) format("woff")
-    , url(https://assets-cdn.github.com/assets/octicons/octicons/octicons-39c6d7739e9153806ef211d2a0f75044891634c4f67425e6250b0d8c6283c2c7.ttf) format("truetype")
-    , url(https://assets-cdn.github.com/assets/octicons/octicons/octicons-c11b1be24a2862c1dc8880c22867d8d01315c9d7da5167c42119eb1bcce2e33c.svg#octicons) format("svg");
-    font-weight: normal;
-    font-style: normal
-}
-
-  .octicon, .mega-octicon {
-  font: normal normal normal 16px/1 octicons;
-  display: inline-block;
-  text-decoration: none;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-}
+        .repo-list-stats .repo-list-stat-item:hover 
+        {
+            color: #4183c4;
+        }
 
 
-  .octicon-star-add:before, .octicon-star-delete:before, .octicon-star:before {
-  content: '\f02a';
-}
+        @font-face 
+        {
+            font-family: 'octicons';
+            src: url(https://assets-cdn.github.com/assets/octicons/octicons/octicons-d5329fb2f700a56fe0b9ae5c301fabbdf5d77c1293b1fa1d35de9357530e2326.eot?#iefix) format("embedded-opentype")
+            , url(https://assets-cdn.github.com/assets/octicons/octicons/octicons-70c2cafa59738740d1ad6d66d46342bafdc6ca63ade3e44c24bed1e6f7b1db71.woff) format("woff")
+            , url(https://assets-cdn.github.com/assets/octicons/octicons/octicons-39c6d7739e9153806ef211d2a0f75044891634c4f67425e6250b0d8c6283c2c7.ttf) format("truetype")
+            , url(https://assets-cdn.github.com/assets/octicons/octicons/octicons-c11b1be24a2862c1dc8880c22867d8d01315c9d7da5167c42119eb1bcce2e33c.svg#octicons) format("svg");
+            font-weight: normal;
+            font-style: normal
+        }
 
 
-  .octicon-git-branch-create:before, .octicon-git-branch-delete:before, .octicon-git-branch:before
-  {
-  	content: '\f020';
-	}
+        .octicon, .mega-octicon 
+        {
+            font: normal normal normal 16px/1 octicons;
+            display: inline-block;
+            text-decoration: none;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
 
-	.octicon-repo-delete:before, .octicon-repo:before {
-  content: '\f001';
-}
+
+        .octicon-star-add:before, .octicon-star-delete:before, .octicon-star:before 
+        {
+            content: '\f02a';
+        }
 
 
-	.btn .octicon {
-  vertical-align: text-top;
-}
+        .octicon-git-branch-create:before, .octicon-git-branch-delete:before, .octicon-git-branch:before
+        {
+            content: '\f020';
+        }
 
-	.btn-primary {
-  color: #fff;
-  text-shadow: 0 -1px 0 rgba(0,0,0,0.15);
-  background-color: #60b044;
-  background-image: -webkit-linear-gradient(#8add6d, #60b044);
-  background-image: linear-gradient(#8add6d, #60b044);
-  border-color: #5ca941;
-}
+        .octicon-repo-delete:before, .octicon-repo:before 
+        {
+            content: '\f001';
+        }
+
+
+        .btn .octicon 
+        {
+            vertical-align: text-top;
+        }
+
+        .btn-primary 
+        {
+            color: #fff;
+            text-shadow: 0 -1px 0 rgba(0,0,0,0.15);
+            background-color: #60b044;
+            background-image: -webkit-linear-gradient(#8add6d, #60b044);
+            background-image: linear-gradient(#8add6d, #60b044);
+            border-color: #5ca941;
+        }
 
     </style>
-
 
 </head>
 <body>
@@ -298,11 +337,6 @@
           <input type="submit" value="Search" class="btn">
       </form>    
     </div>
-
-
-
-
-
 
 
 
@@ -354,15 +388,6 @@
 			-->
         </li>
 
-
-        <li>
-            <h3 class="repo-list-name">
-                <a href="/ststeiger/WebGitNet">
-                    WebGitNet
-                </a>
-            </h3>
-
-        </li>
         <li></li>
         <li></li>
     </ul>
