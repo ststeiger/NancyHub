@@ -1,0 +1,33 @@
+﻿@model GitAdmin.Models.ProfileOverview
+        
+        <div style="display: inline-block; width: 200px; height: 450px; text-align: center; float: left; margin-right: 0.5cm;">
+            <!--
+            <img src="@Model.ImageURL" style="width: 150px; height: 150px;" alt="@Model.AltText" name="productimage" />
+            <img src="@Url.Action("Thumb", "Home")?id=@Model.ImageURL" style="width: 200px; height: 200px;" alt="@Model.AltText" name="productimage" />
+            -->
+            <div style="display: table-cell; width: 200px; height: 205px; vertical-align: bottom;">
+                <a href="@Model.ImageURL"  target="_blank">
+                    <img id="img1" name="productimage" alt="@Model.AltText" style="border: none;" src="@Url.Action("Thumb", "Gallery")?id=@Model.ImageURL" />
+                </a>
+            </div>
+
+            <br />
+
+            Profile ID: <a href="/profile?id=@Model.ProfileId;" target="_blank">@Model.ProfileId</a><br />
+
+            <div style="overflow:hidden; margin: 0px; padding: 0px;" >
+		        @Model.DisplayName, @Model.Age y.o.
+	        </div>
+
+
+	        @Model.Country<br />
+	        @Model.Region<br />	
+            @Model.City<br />
+		    Height: @Model.strHeight<br />
+	        Weight: @Model.strWeight<br />
+	        Looking for @Model.LookingFor, @Model.LookingFrom- @Model.LookingTo y.o.<br />
+	        Registered: @Model.strRegistered<br />
+            Last visit: @Model.strLastVisited<br />
+		    <b>Online now</b><br />
+
+        </div>
