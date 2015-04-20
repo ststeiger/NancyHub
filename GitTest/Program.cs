@@ -14,7 +14,7 @@ namespace GitTest
 			// Added CreateExe to FastZip
 			// ICSharpCode.SharpZipLib.Zip.FastZip fz = new ICSharpCode.SharpZipLib.Zip.FastZip();
 			// fz.CreateZip("zipfilename", "sourceDir", true, null);
-		}
+		} // End Sub xxx 
 
 
 		public static void Ena()
