@@ -11,6 +11,7 @@ namespace TestApp
         private const int WM_VSCROLL = 0x115;
         private const int SB_BOTTOM = 7;
 
+
         /// <summary>
         /// Scrolls the vertical scroll bar of a multi-line text box to the bottom.
         /// </summary>

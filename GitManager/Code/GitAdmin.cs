@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NancyHub
+namespace GitManager
 {
 
     public abstract class GitAdmin

@@ -14,6 +14,7 @@ namespace GitAdmin.Controllers
         {
             public string Name;
             public string Path;
+            public string Description;
         }
 
         
@@ -41,7 +42,10 @@ namespace GitAdmin.Controllers
 
             for (int i = 0; i < 10; ++i)
             {
-                rl.Repositories.Add(new Repo() { Name =  string.Format("Repo {0,2:N0}", i + 1).Replace(" ", "&nbsp;")  });
+                rl.Repositories.Add(new Repo() { 
+                    Name =  string.Format("Repo {0,2:N0}", i + 1).Replace(" ", "&nbsp;")
+                    ,Description = string.Format("Description for repository {0:N0}", i + 1)
+                });
             }
 
 

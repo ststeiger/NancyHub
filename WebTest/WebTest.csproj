@@ -65,13 +65,6 @@
     <Content Include="Libs\Ionic.Zip.dll" />
     <Content Include="Libs\Ionic.Zlib.dll" />
     <Content Include="Libs\Newtonsoft.Json.dll" />
-    <Content Include="Libs\ngit\ICSharpCode.SharpZipLib.dll" />
-    <Content Include="Libs\ngit\Mono.Posix.dll" />
-    <Content Include="Libs\ngit\Mono.Security.dll" />
-    <Content Include="Libs\ngit\NGit.dll" />
-    <Content Include="Libs\ngit\NSch.dll" />
-    <Content Include="Libs\ngit\Sharpen.dll" />
-    <Content Include="Libs\ngit\Sharpen.Unix.dll" />
     <Content Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -87,12 +80,10 @@
     <Compile Include="AppCode\old\BetterDict.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AppCode\old\SafeSession.cs" />
-    <Compile Include="AppCode\SharpZipLib.cs" />
     <Compile Include="Zipball.ashx.cs">
       <DependentUpon>Zipball.ashx</DependentUpon>
     </Compile>
-    <Compile Include="AppCode\Zipip.ExeBytes.cs" />
-    <Compile Include="AppCode\ZipUtils.cs" />
+    <Compile Include="AppCode\DotNetZipZipUtils.cs" />
     <Compile Include="JavaScript.cs" />
   </ItemGroup>
   <ItemGroup>

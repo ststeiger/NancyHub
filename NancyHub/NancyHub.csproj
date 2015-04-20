@@ -47,15 +47,6 @@
     <Reference Include="System.Web.Services" />
     <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>Libs\ngit\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Posix">
-      <HintPath>Libs\ngit\Mono.Posix.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Security">
-      <HintPath>Libs\ngit\Mono.Security.dll</HintPath>
-    </Reference>
     <Reference Include="Nancy">
       <HintPath>Libs\Nancy.dll</HintPath>
     </Reference>
@@ -68,18 +59,6 @@
     <Reference Include="Nancy.ViewEngines.Razor.BuildProviders">
       <HintPath>Libs\Nancy.ViewEngines.Razor.BuildProviders.dll</HintPath>
     </Reference>
-    <Reference Include="NGit">
-      <HintPath>Libs\ngit\NGit.dll</HintPath>
-    </Reference>
-    <Reference Include="NSch">
-      <HintPath>Libs\ngit\NSch.dll</HintPath>
-    </Reference>
-    <Reference Include="Sharpen">
-      <HintPath>Libs\ngit\Sharpen.dll</HintPath>
-    </Reference>
-    <Reference Include="Sharpen.Unix">
-      <HintPath>Libs\ngit\Sharpen.Unix.dll</HintPath>
-    </Reference>
     <Reference Include="System.Web.Razor.Unofficial">
       <HintPath>Libs\System.Web.Razor.Unofficial.dll</HintPath>
     </Reference>
@@ -91,13 +70,6 @@
     <Content Include="Libs\Nancy.Hosting.Aspnet.dll" />
     <Content Include="Libs\Nancy.ViewEngines.Razor.BuildProviders.dll" />
     <Content Include="Libs\Nancy.ViewEngines.Razor.dll" />
-    <Content Include="Libs\ngit\ICSharpCode.SharpZipLib.dll" />
-    <Content Include="Libs\ngit\Mono.Posix.dll" />
-    <Content Include="Libs\ngit\Mono.Security.dll" />
-    <Content Include="Libs\ngit\NGit.dll" />
-    <Content Include="Libs\ngit\NSch.dll" />
-    <Content Include="Libs\ngit\Sharpen.dll" />
-    <Content Include="Libs\ngit\Sharpen.Unix.dll" />
     <Content Include="Libs\System.Web.Razor.Unofficial.dll" />
     <Content Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
@@ -118,12 +90,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AppCode\GitImplementation.cs" />
-    <Compile Include="AppCode\CurrentGitImplementation.cs" />
-    <Compile Include="AppCode\GitAdmin.cs" />
-    <Compile Include="AppCode\GitRepositoryImplementation.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="AppCode\" />
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
@@ -172,7 +141,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <ItemGroup>
-    <EmbeddedResource Include="EmbeddedResources\Text\gitignore.txt" />
-  </ItemGroup>
 </Project>
