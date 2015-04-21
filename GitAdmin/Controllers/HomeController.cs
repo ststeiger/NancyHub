@@ -33,10 +33,16 @@ namespace GitAdmin.Controllers
             return path;
         }
 
+        public ActionResult New(string id)
+        {
+            string str = null;
+            return View(str);
+        }
+
 
 		public ActionResult Search(string id, string q)
 		{
-			return new RedirectResult ("/Home/Index/" + id + q);
+            return new RedirectResult(Url.Action("Index", "Home", new { id = id + q }));
 		}
 
 

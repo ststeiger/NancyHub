@@ -1,0 +1,1007 @@
+﻿
+@model GitAdmin.Controllers.HomeController.RepoList
+
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="en">
+
+    <title>@System.Environment.UserName - NancyHub</title>
+    <meta http-equiv="cache-control" content="max-age=0" />
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="expires" content="0" />
+    <meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta name="viewport" content="width=device-width" />
+
+    <style type="text/css" media="all">
+        *
+        {
+            box-sizing: border-box;
+        }
+
+
+        .btn 
+        {
+            position: relative;
+            display: inline-block;
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: bold;
+            line-height: 20px;
+            color: #333;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            background-color: #eee;
+            background-image: -webkit-linear-gradient(#fcfcfc, #eee);
+            background-image: linear-gradient(#fcfcfc, #eee);
+            border: 1px solid #d5d5d5;
+            border-radius: 3px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-appearance: none;
+        }
+
+
+        input, select, textarea, button 
+        {
+            font: 13px/1.4 Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol";
+        }
+
+
+        input[type="text"], input[type="password"], input[type="email"], input[type="number"], input[type="tel"], input[type="url"], textarea 
+        {
+            min-height: 34px;
+            padding: 7px 8px;
+            font-size: 13px;
+            color: #333;
+            vertical-align: middle;
+            background-color: #fff;
+            background-repeat: no-repeat;
+            background-position: right center;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            outline: none;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+        }
+
+
+        input:not([type]), input[type="email" i], input[type="number" i], input[type="password" i], input[type="tel" i], input[type="url" i], input[type="text" i] 
+        {
+            padding: 1px 0px;
+        }
+
+
+
+        input[type="text"].focus, input[type="text"]:focus, .focused .drag-and-drop, input[type="password"].focus, input[type="password"]:focus, input[type="email"].focus, input[type="email"]:focus, input[type="number"].focus, input[type="number"]:focus, input[type="tel"].focus, input[type="tel"]:focus, input[type="url"].focus, input[type="url"]:focus, textarea.focus, textarea:focus 
+        {
+            border-color: #51a7e8;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.075),0 0 5px rgba(81,167,232,0.5);
+        }
+
+
+        @@font-face 
+        {
+            font-family: 'octicons';
+            src: url(https://assets-cdn.github.com/assets/octicons/octicons/octicons-d5329fb2f700a56fe0b9ae5c301fabbdf5d77c1293b1fa1d35de9357530e2326.eot?#iefix) format("embedded-opentype")
+            , url(https://assets-cdn.github.com/assets/octicons/octicons/octicons-70c2cafa59738740d1ad6d66d46342bafdc6ca63ade3e44c24bed1e6f7b1db71.woff) format("woff")
+            , url(https://assets-cdn.github.com/assets/octicons/octicons/octicons-39c6d7739e9153806ef211d2a0f75044891634c4f67425e6250b0d8c6283c2c7.ttf) format("truetype")
+            , url(https://assets-cdn.github.com/assets/octicons/octicons/octicons-c11b1be24a2862c1dc8880c22867d8d01315c9d7da5167c42119eb1bcce2e33c.svg#octicons) format("svg");
+            font-weight: normal;
+            font-style: normal
+        }
+
+        .octicon, .mega-octicon 
+        {
+            font: normal normal normal 16px/1 octicons;
+            display: inline-block;
+            text-decoration: none;
+            text-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+
+        .octicon-star-add:before, .octicon-star-delete:before, .octicon-star:before 
+        {
+            content: '\f02a';
+        }
+
+
+        .octicon-git-branch-create:before, .octicon-git-branch-delete:before, .octicon-git-branch:before
+        {
+            content: '\f020';
+        }
+
+        .octicon-repo-delete:before, .octicon-repo:before 
+        {
+            content: '\f001';
+        }
+
+
+        .btn .octicon 
+        {
+            vertical-align: text-top;
+        }
+
+        .btn-primary 
+        {
+            color: #fff;
+            text-shadow: 0 -1px 0 rgba(0,0,0,0.15);
+            background-color: #60b044;
+            background-image: -webkit-linear-gradient(#8add6d, #60b044);
+            background-image: linear-gradient(#8add6d, #60b044);
+            border-color: #5ca941;
+        }
+
+    </style>
+
+</head>
+<body>
+    <h1>Test</h1>
+    <input autocapitalize="off" autofocus="autofocus" class="js-repo-name short with-permission-fields" data-autocheck-url="/repositories/check-name" id="repository_name" maxlength="100" name="repository[name]" size="100" tabindex="2" type="text">
+
+    <div class="with-permission-fields">
+
+        <p>
+            Great repository names are short and memorable. Need inspiration? How about
+            <strong class="reponame-suggestion js-reponame-suggestion">furry-sansa</strong>.
+        </p>
+
+        <!-- description field -->
+
+        <dl class="form">
+            <dt><label for="repository_description">Description</label> <span class="note">(optional)</span></dt>
+            <dd>
+                <input class="long" id="repository_description" name="repository[description]" size="30" tabindex="4" type="text">
+            </dd>
+        </dl>
+
+        <hr>
+
+        <!-- team select box -->
+        <!-- privacy options -->
+
+        <div class="form-checkbox">
+            <label>
+                <input checked="checked" class="js-privacy-toggle" id="repository_public_true" name="repository[public]" tabindex="5" type="radio" value="true">
+                Public
+            </label>
+            <span class="mega-octicon octicon-repo"></span>
+            <span class="note">
+                Anyone can see this repository. You choose who can commit.
+            </span>
+        </div>
+
+        <div class="form-checkbox">
+            <label>
+                <input class="js-privacy-toggle" id="repository_public_false" name="repository[public]" tabindex="5" type="radio" value="false">
+                Private
+            </label>
+            <span class="mega-octicon octicon-lock"></span>
+            <span class="note">
+                You choose who can see and commit to this repository.
+            </span>
+        </div>
+
+        <!-- upgrade upsell -->
+
+        <div id="js-upgrade-container" style="display: none;">
+            <div class="upgrade-upsell js-upgrade" data-login="ststeiger">
+                <div class="form-checkbox">
+                    <label>
+                        <input name="confirm_upgrade" type="checkbox" class="js-confirm-upgrade">
+                        <em class="highlight">Upgrade my account</em>
+                    </label>
+                    <span class="note">
+                        In order to make this repository private, you’ll need to upgrade
+                        your account
+                        from <strong><em>Free</em></strong>
+                        to <strong><em>Micro</em></strong>.<br>
+                        This will cost $7.00/month.
+                    </span>
+                </div>
+
+                <div class="cc-upgrade js-billing-section has-removed-contents"></div>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- auto init -->
+
+        <div class="form-checkbox unchecked">
+            <label>
+                <input name="repository[auto_init]" type="hidden" value="0"><input id="repository_auto_init" name="repository[auto_init]" tabindex="6" type="checkbox" value="1">
+                Initialize this repository with a README
+            </label>
+            <span class="note">
+                This will let you immediately clone the repository to your computer. Skip this step if you're importing an existing repository.
+            </span>
+        </div>
+
+        <ul class="repo-templates">
+            <li>
+                <div class="select-menu js-menu-container js-select-menu">
+                    <span class="btn btn-sm select-menu-button js-menu-target" role="button" aria-haspopup="true">
+                        <i>Add .gitignore:</i>
+                        <span class="js-select-button">None</span>
+                    </span>
+
+                    <div class="select-menu-modal-holder js-menu-content js-navigation-container" aria-hidden="true">
+
+                        <div class="select-menu-modal">
+                            <div class="select-menu-header">
+                                <span class="select-menu-title">.gitignore</span>
+                                <span class="octicon octicon-x js-menu-close" role="button" aria-label="Close"></span>
+                            </div>
+
+                            <div class="select-menu-filters">
+                                <div class="select-menu-text-filter">
+                                    <input type="text" id="context-ignore-filter-field" class="js-filterable-field js-navigation-enable" placeholder="Filter ignores…">
+                                </div>
+                            </div>
+
+                            <div class="select-menu-list" role="menu">
+                                <div data-filterable-for="context-ignore-filter-field">
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_" name="repository[gitignore_template]" type="radio" value="">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">None</div>
+                                    </div>
+
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Actionscript" name="repository[gitignore_template]" type="radio" value="Actionscript">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Actionscript</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Ada" name="repository[gitignore_template]" type="radio" value="Ada">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Ada</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Agda" name="repository[gitignore_template]" type="radio" value="Agda">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Agda</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Android" name="repository[gitignore_template]" type="radio" value="Android">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Android</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_AppEngine" name="repository[gitignore_template]" type="radio" value="AppEngine">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">AppEngine</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_AppceleratorTitanium" name="repository[gitignore_template]" type="radio" value="AppceleratorTitanium">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">AppceleratorTitanium</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_ArchLinuxPackages" name="repository[gitignore_template]" type="radio" value="ArchLinuxPackages">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">ArchLinuxPackages</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Autotools" name="repository[gitignore_template]" type="radio" value="Autotools">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Autotools</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Bancha" name="repository[gitignore_template]" type="radio" value="Bancha">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Bancha</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_C" name="repository[gitignore_template]" type="radio" value="C">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">C</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_C__" name="repository[gitignore_template]" type="radio" value="C++">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">C++</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_CFWheels" name="repository[gitignore_template]" type="radio" value="CFWheels">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">CFWheels</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_CMake" name="repository[gitignore_template]" type="radio" value="CMake">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">CMake</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_CUDA" name="repository[gitignore_template]" type="radio" value="CUDA">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">CUDA</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_CakePHP" name="repository[gitignore_template]" type="radio" value="CakePHP">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">CakePHP</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_ChefCookbook" name="repository[gitignore_template]" type="radio" value="ChefCookbook">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">ChefCookbook</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Clojure" name="repository[gitignore_template]" type="radio" value="Clojure">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Clojure</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_CodeIgniter" name="repository[gitignore_template]" type="radio" value="CodeIgniter">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">CodeIgniter</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_CommonLisp" name="repository[gitignore_template]" type="radio" value="CommonLisp">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">CommonLisp</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Composer" name="repository[gitignore_template]" type="radio" value="Composer">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Composer</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Concrete5" name="repository[gitignore_template]" type="radio" value="Concrete5">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Concrete5</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Coq" name="repository[gitignore_template]" type="radio" value="Coq">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Coq</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_CraftCMS" name="repository[gitignore_template]" type="radio" value="CraftCMS">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">CraftCMS</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_DM" name="repository[gitignore_template]" type="radio" value="DM">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">DM</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Dart" name="repository[gitignore_template]" type="radio" value="Dart">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Dart</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Delphi" name="repository[gitignore_template]" type="radio" value="Delphi">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Delphi</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Drupal" name="repository[gitignore_template]" type="radio" value="Drupal">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Drupal</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_EPiServer" name="repository[gitignore_template]" type="radio" value="EPiServer">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">EPiServer</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Eagle" name="repository[gitignore_template]" type="radio" value="Eagle">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Eagle</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Elisp" name="repository[gitignore_template]" type="radio" value="Elisp">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Elisp</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Elixir" name="repository[gitignore_template]" type="radio" value="Elixir">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Elixir</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Erlang" name="repository[gitignore_template]" type="radio" value="Erlang">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Erlang</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_ExpressionEngine" name="repository[gitignore_template]" type="radio" value="ExpressionEngine">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">ExpressionEngine</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_ExtJS-MVC" name="repository[gitignore_template]" type="radio" value="ExtJS-MVC">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">ExtJS-MVC</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_ExtJs" name="repository[gitignore_template]" type="radio" value="ExtJs">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">ExtJs</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Fancy" name="repository[gitignore_template]" type="radio" value="Fancy">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Fancy</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Finale" name="repository[gitignore_template]" type="radio" value="Finale">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Finale</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_ForceDotCom" name="repository[gitignore_template]" type="radio" value="ForceDotCom">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">ForceDotCom</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Fortran" name="repository[gitignore_template]" type="radio" value="Fortran">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Fortran</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_FuelPHP" name="repository[gitignore_template]" type="radio" value="FuelPHP">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">FuelPHP</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_GWT" name="repository[gitignore_template]" type="radio" value="GWT">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">GWT</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_GitBook" name="repository[gitignore_template]" type="radio" value="GitBook">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">GitBook</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Go" name="repository[gitignore_template]" type="radio" value="Go">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Go</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Gradle" name="repository[gitignore_template]" type="radio" value="Gradle">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Gradle</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Grails" name="repository[gitignore_template]" type="radio" value="Grails">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Grails</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Haskell" name="repository[gitignore_template]" type="radio" value="Haskell">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Haskell</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_IGORPro" name="repository[gitignore_template]" type="radio" value="IGORPro">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">IGORPro</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Idris" name="repository[gitignore_template]" type="radio" value="Idris">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Idris</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Java" name="repository[gitignore_template]" type="radio" value="Java">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Java</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Jboss" name="repository[gitignore_template]" type="radio" value="Jboss">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Jboss</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Jekyll" name="repository[gitignore_template]" type="radio" value="Jekyll">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Jekyll</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Joomla" name="repository[gitignore_template]" type="radio" value="Joomla">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Joomla</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Jython" name="repository[gitignore_template]" type="radio" value="Jython">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Jython</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Kohana" name="repository[gitignore_template]" type="radio" value="Kohana">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Kohana</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_LabVIEW" name="repository[gitignore_template]" type="radio" value="LabVIEW">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">LabVIEW</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Laravel" name="repository[gitignore_template]" type="radio" value="Laravel">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Laravel</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Leiningen" name="repository[gitignore_template]" type="radio" value="Leiningen">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Leiningen</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_LemonStand" name="repository[gitignore_template]" type="radio" value="LemonStand">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">LemonStand</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Lilypond" name="repository[gitignore_template]" type="radio" value="Lilypond">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Lilypond</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Lithium" name="repository[gitignore_template]" type="radio" value="Lithium">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Lithium</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Lua" name="repository[gitignore_template]" type="radio" value="Lua">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Lua</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Magento" name="repository[gitignore_template]" type="radio" value="Magento">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Magento</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Maven" name="repository[gitignore_template]" type="radio" value="Maven">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Maven</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Mercury" name="repository[gitignore_template]" type="radio" value="Mercury">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Mercury</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_MetaProgrammingSystem" name="repository[gitignore_template]" type="radio" value="MetaProgrammingSystem">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">MetaProgrammingSystem</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Meteor" name="repository[gitignore_template]" type="radio" value="Meteor">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Meteor</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Nim" name="repository[gitignore_template]" type="radio" value="Nim">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Nim</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Node" name="repository[gitignore_template]" type="radio" value="Node">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Node</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_OCaml" name="repository[gitignore_template]" type="radio" value="OCaml">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">OCaml</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Objective-C" name="repository[gitignore_template]" type="radio" value="Objective-C">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Objective-C</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Opa" name="repository[gitignore_template]" type="radio" value="Opa">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Opa</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_OracleForms" name="repository[gitignore_template]" type="radio" value="OracleForms">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">OracleForms</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Packer" name="repository[gitignore_template]" type="radio" value="Packer">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Packer</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Perl" name="repository[gitignore_template]" type="radio" value="Perl">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Perl</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Phalcon" name="repository[gitignore_template]" type="radio" value="Phalcon">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Phalcon</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_PlayFramework" name="repository[gitignore_template]" type="radio" value="PlayFramework">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">PlayFramework</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Plone" name="repository[gitignore_template]" type="radio" value="Plone">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Plone</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Prestashop" name="repository[gitignore_template]" type="radio" value="Prestashop">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Prestashop</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Processing" name="repository[gitignore_template]" type="radio" value="Processing">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Processing</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Python" name="repository[gitignore_template]" type="radio" value="Python">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Python</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Qooxdoo" name="repository[gitignore_template]" type="radio" value="Qooxdoo">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Qooxdoo</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Qt" name="repository[gitignore_template]" type="radio" value="Qt">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Qt</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_R" name="repository[gitignore_template]" type="radio" value="R">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">R</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_ROS" name="repository[gitignore_template]" type="radio" value="ROS">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">ROS</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Rails" name="repository[gitignore_template]" type="radio" value="Rails">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Rails</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_RhodesRhomobile" name="repository[gitignore_template]" type="radio" value="RhodesRhomobile">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">RhodesRhomobile</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Ruby" name="repository[gitignore_template]" type="radio" value="Ruby">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Ruby</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Rust" name="repository[gitignore_template]" type="radio" value="Rust">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Rust</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_SCons" name="repository[gitignore_template]" type="radio" value="SCons">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">SCons</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Sass" name="repository[gitignore_template]" type="radio" value="Sass">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Sass</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Scala" name="repository[gitignore_template]" type="radio" value="Scala">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Scala</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Scrivener" name="repository[gitignore_template]" type="radio" value="Scrivener">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Scrivener</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Sdcc" name="repository[gitignore_template]" type="radio" value="Sdcc">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Sdcc</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_SeamGen" name="repository[gitignore_template]" type="radio" value="SeamGen">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">SeamGen</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_SketchUp" name="repository[gitignore_template]" type="radio" value="SketchUp">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">SketchUp</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_SugarCRM" name="repository[gitignore_template]" type="radio" value="SugarCRM">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">SugarCRM</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Swift" name="repository[gitignore_template]" type="radio" value="Swift">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Swift</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Symfony" name="repository[gitignore_template]" type="radio" value="Symfony">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Symfony</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_SymphonyCMS" name="repository[gitignore_template]" type="radio" value="SymphonyCMS">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">SymphonyCMS</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Target3001" name="repository[gitignore_template]" type="radio" value="Target3001">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Target3001</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Tasm" name="repository[gitignore_template]" type="radio" value="Tasm">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Tasm</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_TeX" name="repository[gitignore_template]" type="radio" value="TeX">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">TeX</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Textpattern" name="repository[gitignore_template]" type="radio" value="Textpattern">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Textpattern</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_TurboGears2" name="repository[gitignore_template]" type="radio" value="TurboGears2">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">TurboGears2</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Typo3" name="repository[gitignore_template]" type="radio" value="Typo3">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Typo3</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Umbraco" name="repository[gitignore_template]" type="radio" value="Umbraco">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Umbraco</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Unity" name="repository[gitignore_template]" type="radio" value="Unity">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Unity</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_VVVV" name="repository[gitignore_template]" type="radio" value="VVVV">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">VVVV</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_VisualStudio" name="repository[gitignore_template]" type="radio" value="VisualStudio">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">VisualStudio</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Waf" name="repository[gitignore_template]" type="radio" value="Waf">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Waf</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_WordPress" name="repository[gitignore_template]" type="radio" value="WordPress">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">WordPress</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Xojo" name="repository[gitignore_template]" type="radio" value="Xojo">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Xojo</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Yeoman" name="repository[gitignore_template]" type="radio" value="Yeoman">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Yeoman</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Yii" name="repository[gitignore_template]" type="radio" value="Yii">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Yii</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_ZendFramework" name="repository[gitignore_template]" type="radio" value="ZendFramework">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">ZendFramework</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_Zephir" name="repository[gitignore_template]" type="radio" value="Zephir">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">Zephir</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_gcov" name="repository[gitignore_template]" type="radio" value="gcov">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">gcov</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_nanoc" name="repository[gitignore_template]" type="radio" value="nanoc">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">nanoc</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_opencart" name="repository[gitignore_template]" type="radio" value="opencart">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">opencart</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_gitignore_template_stella" name="repository[gitignore_template]" type="radio" value="stella">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text">stella</div>
+                                    </div>
+                                </div>
+
+                                <div class="select-menu-no-results">Nothing to show</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </li>
+            <li>
+                <div class="select-menu js-menu-container js-select-menu js-license-container license-container">
+                    <span class="btn btn-sm select-menu-button js-menu-target" role="button" aria-haspopup="true">
+                        <i>Add a license:</i>
+                        <span class="js-select-button">None</span>
+                    </span>
+
+                    <div class="select-menu-modal-holder js-menu-content js-navigation-container" aria-hidden="true">
+
+                        <div class="select-menu-modal">
+                            <div class="select-menu-header">
+                                <span class="select-menu-title">Licenses</span>
+                                <span class="octicon octicon-x js-menu-close" role="button" aria-label="Close"></span>
+                            </div>
+
+                            <div class="select-menu-filters">
+                                <div class="select-menu-text-filter">
+                                    <input type="text" id="context-license-filter-field" class="js-filterable-field js-navigation-enable" placeholder="Filter licenses…">
+                                </div>
+                            </div>
+
+                            <div class="select-menu-list" role="menu">
+                                <div data-filterable-for="context-license-filter-field" data-filterable-type="fuzzy">
+                                    <div class="select-menu-item js-navigation-item">
+                                        <input id="repository_license_template_" name="repository[license_template]" type="radio" value="">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text featured-license">None</div>
+                                    </div>
+
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_license_template_apache-2.0" name="repository[license_template]" type="radio" value="apache-2.0">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text featured-license">Apache License 2.0</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_license_template_gpl-2.0" name="repository[license_template]" type="radio" value="gpl-2.0">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text featured-license">GNU General Public License v2.0</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_license_template_mit" name="repository[license_template]" type="radio" value="mit">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text featured-license">MIT License</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_license_template_artistic-2.0" name="repository[license_template]" type="radio" value="artistic-2.0">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text ">Artistic License 2.0</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_license_template_bsd-2-clause" name="repository[license_template]" type="radio" value="bsd-2-clause">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text ">BSD 2-clause "Simplified" License</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_license_template_bsd-3-clause" name="repository[license_template]" type="radio" value="bsd-3-clause">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text ">BSD 3-clause "New" or "Revised" License</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_license_template_cc0-1.0" name="repository[license_template]" type="radio" value="cc0-1.0">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text ">Creative Commons Zero v1.0 Universal</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_license_template_epl-1.0" name="repository[license_template]" type="radio" value="epl-1.0">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text ">Eclipse Public License 1.0</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_license_template_agpl-3.0" name="repository[license_template]" type="radio" value="agpl-3.0">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text ">GNU Affero General Public License v3.0</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_license_template_gpl-3.0" name="repository[license_template]" type="radio" value="gpl-3.0">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text ">GNU General Public License v3.0</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_license_template_lgpl-2.1" name="repository[license_template]" type="radio" value="lgpl-2.1">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text ">GNU Lesser General Public License v2.1</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_license_template_lgpl-3.0" name="repository[license_template]" type="radio" value="lgpl-3.0">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text ">GNU Lesser General Public License v3.0</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_license_template_isc" name="repository[license_template]" type="radio" value="isc">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text ">ISC License</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_license_template_mpl-2.0" name="repository[license_template]" type="radio" value="mpl-2.0">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text ">Mozilla Public License 2.0</div>
+                                    </div>
+                                    <div class="select-menu-item js-navigation-item" role="menuitem">
+                                        <input id="repository_license_template_unlicense" name="repository[license_template]" type="radio" value="unlicense">
+                                        <span class="select-menu-item-icon octicon octicon-check"></span>
+                                        <div class="select-menu-item-text js-select-button-text ">The Unlicense</div>
+                                    </div>
+                                </div>
+
+                                <div class="select-menu-no-results">Nothing to show</div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <a href="http://choosealicense.com" target="_blank" class="license-info tooltipped tooltipped-s" aria-label="Need help picking a license? We've built a site just for you.">
+                    <span class="octicon octicon-info"></span>
+                </a>
+
+            </li>
+        </ul>
+
+        <hr>
+
+        <button type="submit" class="btn btn-primary first-in-line" data-disable-with="Creating repository…" tabindex="7">
+            Create repository
+        </button>
+    </div>
+
+
+</body>
+</html>

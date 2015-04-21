@@ -306,10 +306,11 @@
             value="@ViewBag.SearchTerm"
             >
             <input type="submit" value="Search" class="btn">
-	    <a href="/new" class="btn btn-primary new-repo">
-	        <span class="octicon octicon-repo"></span>
-	        New
-	    </a>
+
+            <a href="@Url.Action("New","Home")" class="btn btn-primary new-repo">
+                <span class="octicon octicon-repo"></span>
+                New
+            </a>
 
         </form>
     </div>
