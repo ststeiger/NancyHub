@@ -133,6 +133,32 @@ namespace GitManager
         } // End Function IsRepository 
 
 
+		public virtual string GetRepoPath(string path)
+		{
+			string retVal = null;
+
+			NGit.Api.Git repository = NGit.Api.Git.Open(path);
+
+			retVal = repository.GetRepository().Directory.GetPath();
+			// string base = repository.GetRepository ().Directory.GetParent ();
+			// System.Console.WriteLine (base);
+
+			CloseRepository (repository);
+
+			return retVal;
+		}
+
+
+		public static void ZipRepository(string path, System.IO.Stream strm)
+		{
+			// http://community.sharpdevelop.net/forums/t/2842.aspx
+			// Added CreateExe to FastZip
+			ICSharpCode.SharpZipLib.Zip.FastZip fz = new ICSharpCode.SharpZipLib.Zip.FastZip();
+			// fz.CreateZip("zipfilename", "sourceDir", true, null);
+			fz.CreateZip(strm, path, true, null, null);
+		} // End Sub xxx 
+
+
         // Creates directory if not exists
         public virtual void Clone(string path, string url)
         {
@@ -268,6 +294,7 @@ namespace GitManager
 			NGit.Revwalk.RevCommit c = null;
 			NGit.Api.Git repository = NGit.Api.Git.Open(path);
 
+
 			try
 			{
 				NGit.Revwalk.RevWalk rw = new NGit.Revwalk.RevWalk(repository.GetRepository());
@@ -308,6 +335,20 @@ namespace GitManager
 
 
 			CloseRepository(repository);
+		}
+
+
+		public virtual bool IsBare(string path)
+		{
+			bool retVal = false;
+
+			NGit.Api.Git repository = NGit.Api.Git.Open(path);
+
+			retVal = repository.GetRepository().IsBare;
+
+			CloseRepository (repository);
+
+			return retVal;
 		}
 
 

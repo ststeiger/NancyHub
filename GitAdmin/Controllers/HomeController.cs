@@ -1,11 +1,15 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace GitAdmin.Controllers
 {
+
+
     public class HomeController : Controller
     {
 
@@ -14,7 +18,11 @@ namespace GitAdmin.Controllers
         {
             public string Name;
             public string Path;
-            public string Description;
+			public string Description;
+
+
+			public string ForkSource;
+			public string LastUpdate;
         }
 
         
@@ -40,21 +48,40 @@ namespace GitAdmin.Controllers
 
             RepoList rl = new RepoList();
 
-            for (int i = 0; i < 10; ++i)
-            {
-                rl.Repositories.Add(new Repo() { 
-                    Name =  string.Format("Repo {0,2:N0}", i + 1).Replace(" ", "&nbsp;")
-                    ,Description = string.Format("Description for repository {0:N0}", i + 1)
-                });
-            }
 
+			string path = @"/root/sources/";
+
+			/*
+ 			System.IO.Directory.EnumerateDirectories("path");
+            // System.IO.Directory.EnumerateFiles ();
+            // System.IO.Directory.EnumerateFileSystemEntries ("path");
+            
+            System.Collections.Generic.IEnumerable<string> dl = 
+                System.IO.Directory.EnumerateDirectories(path);
+				
+            foreach (string str in dl)
+            {
+                System.Console.WriteLine (str);
+            } // Next str
+			
+            */
+
+			System.IO.DirectoryInfo dirinf = new System.IO.DirectoryInfo(path);
+
+			foreach (System.IO.DirectoryInfo di in dirinf.EnumerateDirectories())
+			{
+				rl.Repositories.Add(new Repo() { 
+					 Name =  di.Name
+					,Description = string.Format("Description for repository {0}", di.Name)
+				});
+			} // Next di
 
             return View(rl);
         }
 
+
         public ActionResult Overview()
         {
-
             OverviewModel om = new OverviewModel();
 
             //Guid xx = System.Web.HttpContext.Current.GetUserId<Guid>();
@@ -79,7 +106,6 @@ namespace GitAdmin.Controllers
             om.lsMenuPoints.Add(new Models.Win8StyleMenuPoint() { strId = "NewTicket", strDivClass = "B6", strSpanText = "New Ticket" });
             //om.lsMenuPoints.Add(new Win8StyleMenuPoint() { strId = "", strDivClass = "", strSpanText = "" });
             //om.lsMenuPoints.Add(new Win8StyleMenuPoint() { strId = "", strDivClass = "", strSpanText = "" });
-
 
             return View(om);
         }

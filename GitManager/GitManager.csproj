@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -30,34 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.SharpZipLib, Version=0.86.0.518, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\ICSharpCode.SharpZipLib.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Posix, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\Mono.Posix.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Security, Version=2.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\Mono.Security.dll</HintPath>
-    </Reference>
-    <Reference Include="NGit, Version=2015.4.14.936, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\NGit.dll</HintPath>
-    </Reference>
-    <Reference Include="NSch, Version=2015.4.14.936, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\NSch.dll</HintPath>
-    </Reference>
-    <Reference Include="Sharpen, Version=2015.4.14.940, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\Sharpen.dll</HintPath>
-    </Reference>
-    <Reference Include="Sharpen.Unix, Version=2015.4.14.933, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\Sharpen.Unix.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
@@ -66,13 +38,36 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>Libs\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Posix">
+      <HintPath>Libs\Mono.Posix.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Security">
+      <HintPath>Libs\Mono.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="NGit">
+      <HintPath>Libs\NGit.dll</HintPath>
+    </Reference>
+    <Reference Include="NSch">
+      <HintPath>Libs\NSch.dll</HintPath>
+    </Reference>
+    <Reference Include="Sharpen">
+      <HintPath>Libs\Sharpen.dll</HintPath>
+    </Reference>
+    <Reference Include="Sharpen.Unix">
+      <HintPath>Libs\Sharpen.Unix.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Code\Compression\SharpZipLib.cs" />
     <Compile Include="Code\Compression\Zipip.ExeBytes.cs" />
     <Compile Include="Code\CurrentGitImplementation.cs" />
     <Compile Include="Code\GitAdmin.cs" />
-    <Compile Include="Code\GitImplementation.cs" />
+    <Compile Include="Code\GitImplementation.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Compile>
     <Compile Include="Code\GitRepositoryImplementation.cs" />
     <Compile Include="Lzma\Common\CommandLineParser.cs" />
     <Compile Include="Lzma\Common\CRC.cs" />

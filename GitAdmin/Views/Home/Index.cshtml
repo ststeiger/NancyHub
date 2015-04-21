@@ -286,13 +286,9 @@
 </head>
 <body>
 
-    <a href="/new" class="btn btn-primary new-repo">
-        <span class="octicon octicon-repo"></span>
-        New
-    </a>
-
 
     <div class="filter-bar">
+      
         <ul class="repo_filterer">
             <li><a href="#" class="repo_filter js-repo-filter-tab" data-filter=".mirror">Mirrors</a></li>
             <li><a href="#" class="repo_filter js-repo-filter-tab" data-filter=".fork">Forks</a></li>
@@ -305,6 +301,12 @@
             <input type="hidden" name="user" value="ststeiger">
             <input type="text" id="your-repos-filter" name="q" class="filter_input js-filterable-field" placeholder="Find a repository…" tabindex="2" autocomplete="off">
             <input type="submit" value="Search" class="btn">
+
+	    <a href="/new" class="btn btn-primary new-repo">
+	        <span class="octicon octicon-repo"></span>
+	        New
+	    </a>
+
         </form>
     </div>
 

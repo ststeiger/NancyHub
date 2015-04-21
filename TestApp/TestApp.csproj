@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -33,30 +33,26 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>
-    </ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
     <StartupObject>TestApp.MainClass</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Ionic.BZip2, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\Ionic.BZip2.dll</HintPath>
-    </Reference>
-    <Reference Include="Ionic.Zip, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\Ionic.Zip.dll</HintPath>
-    </Reference>
-    <Reference Include="Ionic.Zlib, Version=1.9.1.8, Culture=neutral, PublicKeyToken=edbe51ad942a3f5c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Libs\Ionic.Zlib.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="Ionic.BZip2">
+      <HintPath>Libs\Ionic.BZip2.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zip">
+      <HintPath>Libs\Ionic.Zip.dll</HintPath>
+    </Reference>
+    <Reference Include="Ionic.Zlib">
+      <HintPath>Libs\Ionic.Zlib.dll</HintPath>
+    </Reference>
+    <Reference Include="Sharpen.Unix">
+      <HintPath>Libs\Sharpen.Unix.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="frmTextEditor.cs">
@@ -91,6 +87,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Libs\Sharpen.Unix.dll" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Libs\Ionic.BZip2.dll" />
@@ -107,7 +104,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GitManager\GitManager.csproj">
-      <Project>{2d96611f-51c1-4e2f-95d8-d9be4026e491}</Project>
+      <Project>{2D96611F-51C1-4E2F-95D8-D9BE4026E491}</Project>
       <Name>GitManager</Name>
     </ProjectReference>
   </ItemGroup>
