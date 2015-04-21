@@ -1,4 +1,4 @@
-﻿@model GitAdmin.Controllers.HomeController.Repo
+﻿@model GitManager.GitRepository
  
 <li class="repo-list-item public fork">
     <div class="repo-list-stats">
@@ -15,7 +15,7 @@
 
     <h3 class="repo-list-name">
         <a href="/ststeiger/WebGitNet">
-            @Html.Raw(Model.Name)
+            @Model.Name
         </a>
     </h3>
 
@@ -29,7 +29,10 @@
     </p>
 
     <p class="repo-list-meta">
+        Updated @Model.LastModifiedString
+        <!--
         Updated <time datetime="2015-04-17T09:50:17Z" is="relative-time" title="Apr 17, 2015, 11:50 AM GMT+2">2 days ago</time>
+            -->
     </p>
 
     <!--

@@ -67,24 +67,30 @@
     </Reference>
     <Reference Include="System.Net.Http">
       <HintPath>Libs\MVC4\System.Net.Http.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>Libs\MVC4\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
       <HintPath>Libs\MVC4\System.Net.Http.WebRequest.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Helpers">
       <HintPath>Libs\MVC4\System.Web.Helpers.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Http">
       <HintPath>Libs\MVC4\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Http.OData">
       <HintPath>Libs\MVC4\System.Web.Http.OData.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Http.WebHost">
       <HintPath>Libs\MVC4\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc">
       <HintPath>Libs\MVC4\System.Web.Mvc.dll</HintPath>
@@ -94,15 +100,19 @@
     </Reference>
     <Reference Include="System.Web.Razor">
       <HintPath>Libs\MVC4\System.Web.Razor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages">
       <HintPath>Libs\MVC4\System.Web.WebPages.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Deployment">
       <HintPath>Libs\MVC4\System.Web.WebPages.Deployment.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.WebPages.Razor">
       <HintPath>Libs\MVC4\System.Web.WebPages.Razor.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -112,6 +122,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\GitAdmin.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Filters\InitializeSimpleMembershipAttribute.cs" />
     <Compile Include="Global.asax.cs">
@@ -123,6 +134,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\fonts\info.txt" />
+    <Content Include="Content\fonts\octicons-c11b1be24a2862c1dc8880c22867d8d01315c9d7da5167c42119eb1bcce2e33c.svg" />
     <Content Include="Content\images\w8\1.png" />
     <Content Include="Content\images\w8\10.png" />
     <Content Include="Content\images\w8\10_s.png" />
@@ -167,6 +180,9 @@
     <Content Include="Content\images\w8\s4_s.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Content\fonts\octicons-39c6d7739e9153806ef211d2a0f75044891634c4f67425e6250b0d8c6283c2c7.ttf" />
+    <Content Include="Content\fonts\octicons-70c2cafa59738740d1ad6d66d46342bafdc6ca63ade3e44c24bed1e6f7b1db71.woff" />
+    <Content Include="Content\fonts\octicons-d5329fb2f700a56fe0b9ae5c301fabbdf5d77c1293b1fa1d35de9357530e2326.eot" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Libs\Entity\System.Web.Entity.dll" />
     <Content Include="Libs\MVC4\Microsoft.Web.Infrastructure.dll" />
@@ -232,14 +248,20 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\DisplayTemplates\ProfileOverview.cshtml" />
-    <Content Include="Views\Home\DisplayTemplates\Repo.cshtml" />
     <Content Include="Views\Home\Overview.cshtml" />
     <Content Include="Views\Home\DisplayTemplates\Win8StyleMenuPoint.cshtml" />
+    <Content Include="Views\Home\DisplayTemplates\GitRepository.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\themes\" />
     <Folder Include="Images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GitManager\GitManager.csproj">
+      <Project>{2d96611f-51c1-4e2f-95d8-d9be4026e491}</Project>
+      <Name>GitManager</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

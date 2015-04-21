@@ -59,8 +59,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ClientInfo.htm" />
-    <Content Include="fonts\info.txt" />
-    <Content Include="fonts\octicons-c11b1be24a2862c1dc8880c22867d8d01315c9d7da5167c42119eb1bcce2e33c.svg" />
     <Content Include="Libs\Ionic.BZip2.dll" />
     <Content Include="Libs\Ionic.Zip.dll" />
     <Content Include="Libs\Ionic.Zlib.dll" />
@@ -84,15 +82,12 @@
       <DependentUpon>Zipball.ashx</DependentUpon>
     </Compile>
     <Compile Include="AppCode\DotNetZipZipUtils.cs" />
-    <Compile Include="JavaScript.cs" />
+    <Compile Include="AppCode\JavaScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\octicons-39c6d7739e9153806ef211d2a0f75044891634c4f67425e6250b0d8c6283c2c7.ttf" />
-    <Content Include="fonts\octicons-70c2cafa59738740d1ad6d66d46342bafdc6ca63ade3e44c24bed1e6f7b1db71.woff" />
-    <Content Include="fonts\octicons-d5329fb2f700a56fe0b9ae5c301fabbdf5d77c1293b1fa1d35de9357530e2326.eot" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

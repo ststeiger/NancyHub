@@ -1,8 +1,6 @@
 ﻿
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 
@@ -14,70 +12,56 @@ namespace GitAdmin.Controllers
     {
 
 
-        public class Repo
-        {
-            public string Name;
-            public string Path;
-			public string Description;
-
-
-			public string ForkSource;
-			public string LastUpdate;
-        }
-
-        
         public class RepoList
         {
-            public System.Collections.Generic.List<Repo> Repositories = new List<Repo>();
-        }
+            public List<GitManager.GitRepository> Repositories = new List<GitManager.GitRepository>();
+        } // End Class RepoList
 
 
         public class OverviewModel
         {
-
             public List<Models.Win8StyleMenuPoint> lsMenuPoints = new List<Models.Win8StyleMenuPoint>();
-
-
         } // End Class OverviewModel
 
+
+        public static string GetRepoServerPath()
+        {
+            string path = System.Web.Hosting.HostingEnvironment.MapPath("~");
+            path = System.IO.Path.Combine(path, "..", "..");
+            path = System.IO.Path.GetFullPath(path);
+
+            return path;
+        }
 
 
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-
-            RepoList rl = new RepoList();
-
-
-			string path = @"/root/sources/";
-
-			/*
- 			System.IO.Directory.EnumerateDirectories("path");
-            // System.IO.Directory.EnumerateFiles ();
-            // System.IO.Directory.EnumerateFileSystemEntries ("path");
+            string path = GetRepoServerPath();
             
-            System.Collections.Generic.IEnumerable<string> dl = 
-                System.IO.Directory.EnumerateDirectories(path);
-				
-            foreach (string str in dl)
-            {
-                System.Console.WriteLine (str);
-            } // Next str
-			
-            */
-
+            RepoList rl = new RepoList();
 			System.IO.DirectoryInfo dirinf = new System.IO.DirectoryInfo(path);
 
 			foreach (System.IO.DirectoryInfo di in dirinf.EnumerateDirectories())
 			{
-				rl.Repositories.Add(new Repo() { 
-					 Name =  di.Name
-					,Description = string.Format("Description for repository {0}", di.Name)
-				});
+                GitManager.GitRepository repo = GitManager.GitRepository.CreateInstance(di);
+                if(!repo.IsGitRepo)
+                    continue;
+
+                rl.Repositories.Add(repo);
 			} // Next di
 
+            rl.Repositories.Sort(
+                delegate(GitManager.GitRepository g1, GitManager.GitRepository g2)
+                {
+                    //return g1.Name.CompareTo(g2.Name); // ASC 
+                    // return g1.LastModified.CompareTo(g2.LastModified);// ASC 
+
+                    return g2.LastModified.CompareTo(g1.LastModified); // DESC 
+                }
+            );
+
             return View(rl);
-        }
+        } // End Action Index 
 
 
         public ActionResult Overview()
@@ -90,8 +74,6 @@ namespace GitAdmin.Controllers
             //var MyUserId = UserFromDb.ProviderUserKey;
 
             //Console.WriteLine(UserFromDb.ToJSON());
-
-
 
             om.lsMenuPoints.Add(new Models.Win8StyleMenuPoint() { strId = "FeatureRequest", strDivClass = "B3", strSpanText = "Feature Request" });
             om.lsMenuPoints.Add(new Models.Win8StyleMenuPoint() { strId = "Tasks", strDivClass = "B4", strSpanText = "My Tasks" });
@@ -108,7 +90,7 @@ namespace GitAdmin.Controllers
             //om.lsMenuPoints.Add(new Win8StyleMenuPoint() { strId = "", strDivClass = "", strSpanText = "" });
 
             return View(om);
-        }
+        } // End Action Overview 
 
 
         public ActionResult About()
@@ -116,7 +98,7 @@ namespace GitAdmin.Controllers
             ViewBag.Message = "Your app description page.";
 
             return View();
-        }
+        } // End Action About
 
 
         public ActionResult Contact()
@@ -124,10 +106,10 @@ namespace GitAdmin.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
-        }
+        } // End Action Contact
 
 
-    }
+    } // End Class HomeController : Controller
 
 
-}
+} // End Namespace GitAdmin.Controllers

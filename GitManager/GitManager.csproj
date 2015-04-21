@@ -63,28 +63,27 @@
   <ItemGroup>
     <Compile Include="Code\Compression\SharpZipLib.cs" />
     <Compile Include="Code\Compression\Zipip.ExeBytes.cs" />
-    <Compile Include="Code\CurrentGitImplementation.cs" />
-    <Compile Include="Code\GitAdmin.cs" />
-    <Compile Include="Code\GitImplementation.cs">
+    <Compile Include="Code\CurrentImplementations.cs" />
+    <Compile Include="Code\Git.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Code\GitRepositoryImplementation.cs" />
-    <Compile Include="Lzma\Common\CommandLineParser.cs" />
-    <Compile Include="Lzma\Common\CRC.cs" />
-    <Compile Include="Lzma\Common\InBuffer.cs" />
-    <Compile Include="Lzma\Common\OutBuffer.cs" />
-    <Compile Include="Lzma\Compress\LZMA\LzmaBase.cs" />
-    <Compile Include="Lzma\Compress\LZMA\LzmaDecoder.cs" />
-    <Compile Include="Lzma\Compress\LZMA\LzmaEncoder.cs" />
-    <Compile Include="Lzma\Compress\LZ\IMatchFinder.cs" />
-    <Compile Include="Lzma\Compress\LZ\LzBinTree.cs" />
-    <Compile Include="Lzma\Compress\LZ\LzInWindow.cs" />
-    <Compile Include="Lzma\Compress\LZ\LzOutWindow.cs" />
-    <Compile Include="Lzma\Compress\RangeCoder\RangeCoder.cs" />
-    <Compile Include="Lzma\Compress\RangeCoder\RangeCoderBit.cs" />
-    <Compile Include="Lzma\Compress\RangeCoder\RangeCoderBitTree.cs" />
-    <Compile Include="Lzma\ICoder.cs" />
-    <Compile Include="Lzma\SevenZipHelper.cs" />
+    <Compile Include="Code\GitRepository.cs" />
+    <Compile Include="Code\Compression\Lzma\Common\CommandLineParser.cs" />
+    <Compile Include="Code\Compression\Lzma\Common\CRC.cs" />
+    <Compile Include="Code\Compression\Lzma\Common\InBuffer.cs" />
+    <Compile Include="Code\Compression\Lzma\Common\OutBuffer.cs" />
+    <Compile Include="Code\Compression\Lzma\Compress\LZMA\LzmaBase.cs" />
+    <Compile Include="Code\Compression\Lzma\Compress\LZMA\LzmaDecoder.cs" />
+    <Compile Include="Code\Compression\Lzma\Compress\LZMA\LzmaEncoder.cs" />
+    <Compile Include="Code\Compression\Lzma\Compress\LZ\IMatchFinder.cs" />
+    <Compile Include="Code\Compression\Lzma\Compress\LZ\LzBinTree.cs" />
+    <Compile Include="Code\Compression\Lzma\Compress\LZ\LzInWindow.cs" />
+    <Compile Include="Code\Compression\Lzma\Compress\LZ\LzOutWindow.cs" />
+    <Compile Include="Code\Compression\Lzma\Compress\RangeCoder\RangeCoder.cs" />
+    <Compile Include="Code\Compression\Lzma\Compress\RangeCoder\RangeCoderBit.cs" />
+    <Compile Include="Code\Compression\Lzma\Compress\RangeCoder\RangeCoderBitTree.cs" />
+    <Compile Include="Code\Compression\Lzma\ICoder.cs" />
+    <Compile Include="Code\Compression\Lzma\SevenZipHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Code\Compression\Tar.cs" />
     <Compile Include="Code\Compression\Test.cs" />

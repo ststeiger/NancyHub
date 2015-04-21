@@ -5,7 +5,7 @@ namespace GitManager
 
     // http://www.mcnearney.net/blog/ngit-tutorial/
     // https://github.com/centic9/jgit-cookbook
-    public abstract class GitImplementations
+    public abstract class GitImplementation
     {
 
 
@@ -39,7 +39,7 @@ namespace GitManager
         } // End Function ToInsensitiveGitIgnoreString
 
 
-        public virtual GitRepositoryImplementation Open(string path)
+        public virtual GitRepository Open(string path)
         {
             CurrentRepositoryImplementation cri = new CurrentRepositoryImplementation(path);
             cri.Repository = NGit.Api.Git.Open(path);
@@ -157,6 +157,30 @@ namespace GitManager
 			// fz.CreateZip("zipfilename", "sourceDir", true, null);
 			fz.CreateZip(strm, path, true, null, null);
 		} // End Sub xxx 
+
+
+        public virtual string GetDescription(string path)
+        {
+            string repoName = System.IO.Path.GetFileName(path);
+
+            if (!IsRepository(path))
+                return string.Format("\"{0}\" is not a git repository.", repoName);
+            
+            bool isBare = IsBare(path);
+
+            if(!isBare)
+                path = System.IO.Path.Combine(path, ".git");
+
+            if (!System.IO.Directory.Exists(path))
+                return string.Format("Path \"{0}\" does not exist.", path);
+
+            path = System.IO.Path.Combine(path, "description");
+
+            if (!System.IO.File.Exists(path))
+                return string.Format("No description for repository \"{0}\".", repoName);
+
+            return System.IO.File.ReadAllText(path, System.Text.Encoding.UTF8);
+        }
 
 
         // Creates directory if not exists
@@ -288,6 +312,85 @@ namespace GitManager
         } // End Function GetRemoteBranchId
 
 
+        // http://stackoverflow.com/questions/3407575/retrieving-oldest-commit-with-jgit
+        public virtual System.DateTime GetLastCommitDate(string path)
+        {
+            System.DateTime retVal = default(System.DateTime);
+
+            NGit.Revwalk.RevCommit c = null;
+            NGit.Api.Git repository = NGit.Api.Git.Open(path);
+
+
+            try
+            {
+                NGit.Revwalk.RevWalk rw = new NGit.Revwalk.RevWalk(repository.GetRepository());
+
+                NGit.AnyObjectId headid = repository.GetRepository().Resolve(NGit.Constants.HEAD);
+                c = rw.ParseCommit(headid);
+
+                // repository.GetRepository().
+            }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+
+            // Get author
+            NGit.PersonIdent authorIdent = c.GetAuthorIdent();
+            System.DateTime authorDate = authorIdent.GetWhen();
+
+            retVal = authorDate.ToUniversalTime();
+
+            CloseRepository(repository);
+
+            return retVal;
+        }
+
+
+
+        public virtual System.DateTime GetOldestCommitDate(string path)
+        {
+            System.DateTime retVal = default(System.DateTime);
+
+            NGit.Revwalk.RevCommit c = null;
+            NGit.Api.Git repository = NGit.Api.Git.Open(path);
+
+
+            try
+            {
+                NGit.Revwalk.RevWalk rw = new NGit.Revwalk.RevWalk(repository.GetRepository());
+
+                NGit.AnyObjectId headid = repository.GetRepository().Resolve(NGit.Constants.HEAD);
+                NGit.Revwalk.RevCommit root = rw.ParseCommit(headid);
+
+                string msg1 = root.GetFullMessage();
+
+
+                rw.Sort(NGit.Revwalk.RevSort.REVERSE);
+
+                rw.MarkStart(root);
+                c = rw.Next();
+                // repository.GetRepository().
+            }
+            catch (System.Exception ex)
+            {
+                System.Console.WriteLine(ex.Message);
+            }
+
+            string msg2 = c.GetFullMessage();
+
+            // Get author
+            NGit.PersonIdent authorIdent = c.GetAuthorIdent();
+            System.DateTime authorDate = authorIdent.GetWhen();
+
+            retVal = authorDate.ToUniversalTime();
+
+            CloseRepository(repository);
+
+            return retVal;
+        }
+
+
 		// http://stackoverflow.com/questions/3407575/retrieving-oldest-commit-with-jgit
 		public virtual void GetOldestCommit(string path)
 		{
@@ -330,9 +433,6 @@ namespace GitManager
 			System.Console.WriteLine (authorDate);
 			System.Console.WriteLine (authorTimeZone);
 			System.Console.WriteLine (committerIdent);
-
-
-
 
 			CloseRepository(repository);
 		}

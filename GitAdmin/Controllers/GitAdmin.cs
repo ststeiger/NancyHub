@@ -1,9 +1,8 @@
-﻿using System;
-
-namespace GitManager
+﻿
+namespace GitAdmin
 {
 
-    public abstract class GitAdmin
+    public abstract class GitAdministration 
     {
 
         public virtual bool CreateRepo()
@@ -49,7 +48,7 @@ namespace GitManager
 
 
 
-    public class AdminV1 : GitAdmin
+    public class AdminV1 : GitAdministration
     {
 
     }
