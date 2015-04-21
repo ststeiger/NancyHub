@@ -125,8 +125,12 @@ namespace GitManager
 
                 return b;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+				System.Console.WriteLine (ex.Message);
+
+				if (ex is System.TypeInitializationException)
+					throw;
             }
 
             return false;

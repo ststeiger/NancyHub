@@ -3,6 +3,7 @@ namespace GitManager
 {
 
 
+	// http://meta.stackexchange.com/questions/224873/all-stack-exchange-data-dumps/224922#224922 
     public abstract class GitRepository
     {
         protected GitImplementation m_Git;
@@ -107,11 +108,55 @@ namespace GitManager
 		}
 
 
+
+
 		public bool IsArchived { 
 			get{ 
 				return System.IO.File.Exists(System.IO.Path.Combine(this.RepoPath, "archived"));
 			}
 		}
+
+
+		protected System.Random m_seed = new System.Random();
+
+
+		public int StarCount
+		{
+			get{ 
+				return m_seed.Next (100, 501);
+			}
+		}
+
+
+		public int ForkCount
+		{
+			get{ 
+				return m_seed.Next (100, 501);
+			}
+		}
+
+		public string ProgrammingLanguage
+		{
+			get{ 
+				return "C#";
+			}
+		}
+
+
+		public bool HasForkSource
+		{
+			get{ 
+				return !string.IsNullOrWhiteSpace (ForkSource);
+			}
+		}
+
+		public string ForkSource
+		{
+			get{ 
+				return "";
+			}
+		}
+
 
 
     } // End Class GitRepositoryImplementation 

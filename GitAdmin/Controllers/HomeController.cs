@@ -34,10 +34,19 @@ namespace GitAdmin.Controllers
         }
 
 
-        public ActionResult Index()
+		public ActionResult Search(string id, string q)
+		{
+			return new RedirectResult ("/Home/Index/" + id + q);
+		}
+
+
+		public ActionResult Index(string id)
         {
             string path = GetRepoServerPath();
-            
+			ViewBag.SearchTerm = id;
+
+
+
             RepoList rl = new RepoList();
 			System.IO.DirectoryInfo dirinf = new System.IO.DirectoryInfo(path);
 
@@ -47,7 +56,14 @@ namespace GitAdmin.Controllers
                 if(!repo.IsGitRepo)
                     continue;
 
-                rl.Repositories.Add(repo);
+				int pos = 1;
+
+				if(!string.IsNullOrWhiteSpace(id))
+					pos = System.Globalization.CultureInfo.InvariantCulture
+					.CompareInfo.IndexOf (repo.Name, id, System.Globalization.CompareOptions.IgnoreCase);
+
+				if(pos != -1)
+                	rl.Repositories.Add(repo);
 			} // Next di
 
             rl.Repositories.Sort(

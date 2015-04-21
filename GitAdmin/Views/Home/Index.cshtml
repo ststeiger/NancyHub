@@ -296,12 +296,16 @@
             <li class="all_repos"><a href="#" class="repo_filter js-repo-filter-tab filter-selected" data-filter=".public, .private">All</a></li>
         </ul>
 
-        <form accept-charset="UTF-8" action="/search" class="repo-search" method="get" role="search">
+        <form accept-charset="UTF-8" action="@Url.Action("Search", "Home")" class="repo-search" method="get" role="search">
             <div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="✓"></div>
-            <input type="hidden" name="user" value="ststeiger">
-            <input type="text" id="your-repos-filter" name="q" class="filter_input js-filterable-field" placeholder="Find a repository…" tabindex="2" autocomplete="off">
+            <input type="hidden" name="user" value="@System.Environment.UserName">
+            <input type="text" id="your-repos-filter" name="q" 
+            class="filter_input js-filterable-field" 
+            placeholder="Find a repository…" tabindex="2" 
+            autocomplete="off"
+            value="@ViewBag.SearchTerm"
+            >
             <input type="submit" value="Search" class="btn">
-
 	    <a href="/new" class="btn btn-primary new-repo">
 	        <span class="octicon octicon-repo"></span>
 	        New

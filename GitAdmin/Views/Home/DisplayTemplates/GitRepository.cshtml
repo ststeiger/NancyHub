@@ -2,14 +2,14 @@
  
 <li class="repo-list-item public fork">
     <div class="repo-list-stats">
-        C#
+        @Model.ProgrammingLanguage
         <a class="repo-list-stat-item tooltipped tooltipped-s" href="/ststeiger/WebGitNet/stargazers" aria-label="Stargazers">
             <span class="octicon octicon-star"></span>
-            0
+            @Model.StarCount
         </a>
         <a class="repo-list-stat-item tooltipped tooltipped-s" href="/ststeiger/WebGitNet/network" aria-label="Forks">
             <span class="octicon octicon-git-branch"></span>
-            56
+            @Model.ForkCount
         </a>
     </div>
 
@@ -20,8 +20,20 @@
     </h3>
 
     <p class="repo-list-info">
-        <span class="octicon octicon-repo-forked"></span>
-        forked from <a href="/otac0n/WebGitNet">otac0n/WebGitNet</a>
+
+
+    @if(Model.HasForkSource)
+    {
+    	<span class="octicon octicon-repo-forked"></span>
+    	@:forked from 
+    	<a href="@Model.ForkSource">@Model.ForkSource</a>
+    }
+
+
+	<span class="octicon octicon-repo-forked"></span>
+
+
+        
     </p>
 
     <p class="repo-list-description">
