@@ -20,8 +20,11 @@ namespace TestApp
 
             
             GitManager.CurrentGitImplementation cgi = new GitManager.CurrentGitImplementation();
-
-
+            
+            
+            
+            cgi.ListCommits();
+            
 			cgi.GetOldestCommit(repoURI);
 
 

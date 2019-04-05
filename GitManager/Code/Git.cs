@@ -1,4 +1,7 @@
 ﻿
+using NGit.Revwalk;
+using NGit.Util;
+
 namespace GitManager
 {
 
@@ -512,16 +515,59 @@ namespace GitManager
 
             CloseRepository(repository);
         } // End Sub ListBranches
+        
+        // https://stackoverflow.com/questions/40590039/how-to-get-the-file-list-for-a-commit-with-jgit
+        // https://github.com/centic9/jgit-cookbook/blob/master/src/main/java/org/dstadler/jgit/api/GetRevCommitFromObjectId.java
+        public virtual void ListFilesIncmt(string path, NGit.Revwalk.RevCommit commit)
+        {
+            NGit.Api.Git repository = NGit.Api.Git.Open(path);
+            NGit.ObjectId treeId = commit.Tree.Id;
+            
+            NGit.Treewalk.TreeWalk treeWalk = new NGit.Treewalk.TreeWalk(repository.GetRepository());
+            
+            treeWalk.Reset(treeId);
+            
+            while (treeWalk.Next())
+            {
+                string filePath = treeWalk.PathString;
+                System.Console.WriteLine(filePath);
+            }
 
+            NGit.Ref @ref =  repository.GetRepository().GetRef("refs/heads/master");
+            NGit.ObjectId head = @ref.GetObjectId();
+            using (NGit.Revwalk.RevWalk walk = new NGit.Revwalk.RevWalk(repository.GetRepository()))
+            {
+                NGit.Revwalk.RevCommit headCommit = walk.ParseCommit(head);    
+            }
+            
+            NGit.ObjectId commitIdFromHash = repository.GetRepository().Resolve("revstr");
+        }
 
+        
+        // https://stackoverflow.com/questions/45793800/jgit-read-the-content-of-a-file-at-a-commit-in-a-branch
+        private string GetFileContent(string repositoryPath, string path, NGit.Revwalk.RevCommit commit) 
+        {
+            NGit.Api.Git repository = NGit.Api.Git.Open(repositoryPath);
+            
+            NGit.Treewalk.TreeWalk treeWalk = NGit.Treewalk.TreeWalk.ForPath(
+                repository.GetRepository(), path, commit.Tree);
+
+            NGit.ObjectId blobId = treeWalk.GetObjectId(0);
+
+            NGit.ObjectReader objectReader = repository.GetRepository().NewObjectReader();
+            NGit.ObjectLoader objectLoader = objectReader.Open(blobId);
+            
+            byte[] bytes = objectLoader.GetBytes();
+            return System.Text.Encoding.UTF8.GetString(bytes);
+        }
+        
+        
         public virtual void ListCommits(string path)
         {
             NGit.Api.Git repository = NGit.Api.Git.Open(path);
 
             Sharpen.Iterable<NGit.Revwalk.RevCommit> la = repository.Log().All().Call();
-
-
-
+            
             int count = 0;
             foreach (NGit.Revwalk.RevCommit commit in la)
             {
